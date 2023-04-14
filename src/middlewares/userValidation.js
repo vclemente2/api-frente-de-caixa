@@ -4,7 +4,7 @@ const validateUser = (validationsSchema) => async (req, res, next) => {
 
         next();
     } catch (error) {
-        return res.status(400).json({ mensagem: `Os campos ${req.body} são obrigatórios` });
+        return res.status(400).json({ mensagem: error.message });
     }
 }
 
