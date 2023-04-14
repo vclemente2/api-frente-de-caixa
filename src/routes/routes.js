@@ -1,10 +1,9 @@
-const express = require('express');
+const { Router } = require('express');
 
-const router = express.Router();
+const routes = Router();
 
-router.post('/usuario')//cadastro de usuario
+routes.get('/', (req, res) => { res.json('server is running') });
 
-// as rotas abaixo precisam de autenticação
-router.use('função validar login');
+routes.use(() => { }); // intermediário de autenticação
 
-module.exports = router;
+module.exports = routes;
