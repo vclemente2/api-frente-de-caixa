@@ -1,22 +1,20 @@
-// verificar o funcionamento dentro do código do projeto
-
-const knex = require('../database/connection');// verificar o caminho correto
+const UserRepository = require('../repositories/UserRepository');
 
 const uniqueEmail = async (req, res, next) => {
-try {
-const { email } = req.body;
+    try {
+        const { email } = req.body;
 
-const result = await knex(usuarios).where({ email }).first();
+        const result = await UserRepository.findByEmail(email);
 
- if(result){
-return res.status(400).json({ mensagem: `O email ${req.body.email} já está cadastrado` });
-}
+        if (result) {
+            return res.status(400).json({ mensagem: `O email ${email} já está cadastrado` });
+        }
 
-next()
+        next();
 
-} catch (error) {
-return res.status(400).json({ mensagem: `O email ${req.body.email} já está cadastrado` });
-}
+    } catch (error) {
+        return res.status(500).json({ mensagem: 'Erro interno do servidor' });
+    }
 }
 
 module.exports = uniqueEmail;
