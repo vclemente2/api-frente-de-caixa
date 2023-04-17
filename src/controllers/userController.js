@@ -1,7 +1,7 @@
 // A implementar
 const bcrypt = require('bcrypt');
 const UserRepository = require('../repositories/UserRepository');
-
+const CategoryRepository = require('../repositories/CategoryRepository');
 
 const createUser = async (req, res) => {
     const {
@@ -36,6 +36,17 @@ const createUser = async (req, res) => {
     }
 };
 
+
+const listCategory = async (req, res) => {
+
+
+    const category = await CategoryRepository.findAll()
+
+    return res.status(200).json(category)
+
+}
+
 module.exports = {
     createUser,
+    listCategory
 }
