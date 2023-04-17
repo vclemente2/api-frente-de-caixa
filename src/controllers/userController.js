@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const UserRepository = require('../repositories/UserRepository');
 
 
-
 const createUser = async (req, res) => {
     const {
         nome,

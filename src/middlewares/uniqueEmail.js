@@ -1,4 +1,4 @@
-const UserRepository = require('../repositories/userRepository.js');
+const UserRepository = require('../repositories/UserRepository.js');
 
 const uniqueEmail = async (req, res, next) => {
     try {
