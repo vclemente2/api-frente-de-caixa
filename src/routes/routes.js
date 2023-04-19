@@ -1,17 +1,23 @@
-const { Router } = require('express');
-const uniqueEmail = require('../middlewares/uniqueEmail');
-const { createUser, listCategory } = require('../controllers/userController');
-const validateUser = require('../middlewares/userValidation');
-const userRegistration = require('../schema/userRegistration');
+const { Router } = require('express')
+const { createUser, updateUser, userProfile, listCategory } = require('../controllers/userController')
+const userSchema = require('../schema/userSchema')
+const loginSchema = require('../schema/loginSchema')
+const { validateUserRequiredData } = require('../middlewares/userValidation')
+const { validateRequisitionBody } = require('../middlewares/bodyValidation')
+const { validateUserLogin } = require('../middlewares/loginValidate')
+const { userLogin } = require('../controllers/authController')
+const { verifyLoggedUser } = require('../middlewares/authMiddleware')
 
-const routes = Router();
+const routes = Router()
 
-routes.get('/', (req, res) => { res.json('server is running') });
 routes.get('/categoria', listCategory)
+routes.post('/usuario', validateRequisitionBody(userSchema), validateUserRequiredData, createUser)
+routes.post('/login', validateRequisitionBody(loginSchema), validateUserLogin, userLogin)
 
-routes.post('/usuario', validateUser(userRegistration), uniqueEmail, createUser);
+routes.use(verifyLoggedUser)
 
-routes.use(() => { }); // intermediário de autenticação
+routes.get('/usuario', userProfile)
+routes.put('/usuario', validateRequisitionBody(userSchema), validateUserRequiredData, updateUser)
 
 
-module.exports = routes;
+module.exports = routes

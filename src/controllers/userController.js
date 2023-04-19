@@ -1,46 +1,58 @@
-// A implementar
-const bcrypt = require('bcrypt');
-const UserRepository = require('../repositories/UserRepository');
-const CategoryRepository = require('../repositories/CategoryRepository');
+const bcrypt = require('bcrypt')
+const userRepository = require('../repositories/UserRepository')
+const categoryRepository = require('../repositories/CategoryRepository')
 
 const createUser = async (req, res) => {
-    const {
-        nome,
-        email,
-        senha,
-    } = req.body;
 
-
+    const { nome, email, senha } = req.body
 
     try {
 
-        const encryptedPassword = await bcrypt.hash(senha, 10);
+        const encryptedPassword = await bcrypt.hash(senha, 10)
 
-        const user = await UserRepository.create({
+        const user = await userRepository.create({
             nome,
             email,
             senha: encryptedPassword
-        })
+        }, ['id', 'nome', 'email'])
 
 
-        if (!user) {
-            return res
-                .status(500).json({ mensagem: 'O usuário não foi cadastrado.' });
-        }
+        if (!user) return res.status(500).json({ mensagem: 'O usuário não foi cadastrado.' })
 
-        const { senha: _, ...newUser } = user[0];
+        return res.status(201).json(user[0])
 
-        return res.status(201).json(newUser);
     } catch (error) {
-        return res.status(500).json({ mensagem: 'Erro interno do servidor' });
+        return res.status(500).json({ mensagem: 'Erro interno do servidor' })
     }
-};
+}
+
+const userProfile = (req, res) => {
+    return res.json(req.user)
+}
+
+const updateUser = async (req, res) => {
+
+    const { nome, email, senha } = req.body
+
+    try {
+
+        const encryptedPassword = await bcrypt.hash(senha, 10)
+
+        await userRepository.update({ nome, email, senha: encryptedPassword }, req.user.id)
+
+        return res.status(204).json()
+
+    } catch (error) {
+        return res.status(500).json({ mensagem: 'Erro interno do servidor' })
+    }
+
+}
 
 
 const listCategory = async (req, res) => {
 
     try {
-        const category = await CategoryRepository.findAll()
+        const category = await categoryRepository.findAll()
 
         return res.status(200).json(category)
     } catch (error) {
@@ -52,5 +64,7 @@ const listCategory = async (req, res) => {
 
 module.exports = {
     createUser,
-    listCategory
+    listCategory,
+    userProfile,
+    updateUser
 }
