@@ -5,9 +5,9 @@ const validateRequisitionBody = validationsSchema => async (req, res, next) => {
         await validationsSchema.validateAsync(req.body)
 
         next()
-        
+
     } catch (error) {
-        return res.status(400).json({ mensagem: error.message })
+        return res.status(422).json({ mensagem: error.message })
     }
 }
 

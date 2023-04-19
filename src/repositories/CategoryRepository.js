@@ -1,4 +1,4 @@
-const BaseRepository = require('./BaseRepository');
+const BaseRepository = require('./BaseRepository')
 
 class CategoryRepository extends BaseRepository {
     constructor() {
@@ -6,4 +6,4 @@ class CategoryRepository extends BaseRepository {
     }
 }
 
-module.exports = new CategoryRepository();
+module.exports = new CategoryRepository()
