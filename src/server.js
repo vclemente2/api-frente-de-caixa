@@ -12,7 +12,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-app.get('/', (req, res) => res.send(`<h2 style="color: darkblue">PDV API (Frente de Caixa)</h2><p><b>Bem-vindo ao PDV API</b></br></br></br>Desenvolvido pela equipe <b>DEV<span style="color:red">BEVS<span></b>:</br></br><b style="font-size:20px; color:red">B</b>rundo Ramos</br><b style="font-size:20px; color:red">E</b>dfram Guerra</br><b style="font-size:20px; color:red">V</b>inicius Bastos</br><b style="font-size:20px; color:red">S</b>hylton Santana</p>`))
+app.get('/', (req, res) => res.send(`<h2 style="color: darkblue">PDV API (Frente de Caixa)</h2><p><b>Bem-vindo à PDV API</b></br></br></br>Desenvolvido pela equipe <b>DEV<span style="color:red">BEVS<span></b>:</br></br><b style="font-size:20px; color:red">B</b>runo Ramos</br><b style="font-size:20px; color:red">E</b>dfram Guerra</br><b style="font-size:20px; color:red">V</b>inicius Bastos</br><b style="font-size:20px; color:red">S</b>hylton Santana</p>`))
 app.use(routes)
 app.use(errorMiddleware)
 
