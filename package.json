@@ -2,7 +2,7 @@
   "name": "desafio-backend-final-dbe-b2b-t03-ifood",
   "version": "1.0.0",
   "description": "![](https://i.imgur.com/xG74tOh.png)",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "dev": "nodemon ./src/app.js",
     "start": "node ./src/app.js"
