@@ -1,25 +1,27 @@
-const connection = require('../connection/database.js');
+const connection = require('../connection/database')
 
 class BaseRepository {
+
     constructor(table) {
-        this.table = table;
+        this.table = table
     }
 
     async findAll() {
-        return await connection(this.table);
+        return await connection(this.table)
     }
+    
     async findOne(id) {
-        return await connection(this.table).where({ id }).first();
+        return await connection(this.table).where({ id }).first()
     }
-    async create(data) {
-        return await connection(this.table).insert(data).returning('*');
+    async create(data, infoArray) {
+        return await connection(this.table).insert(data).returning(infoArray)
     }
     async update(data, id) {
-        return await connection(this.table).where({ id }).update(data).returning('*');
+        return await connection(this.table).where('id', id).update(data).returning('*')
     }
     async delete(id) {
-        return await connection(this.table).where({ id });
+        return await connection(this.table).where({ id })
     }
 }
 
-module.exports = BaseRepository;
+module.exports = BaseRepository

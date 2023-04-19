@@ -1,5 +1,5 @@
-const BaseRepository = require('./BaseRepository.js');
-const connection = require('../connection/database.js');
+const BaseRepository = require('./BaseRepository.js')
+const connection = require('../connection/database.js')
 
 class UserRepository extends BaseRepository {
     constructor() {
@@ -7,8 +7,8 @@ class UserRepository extends BaseRepository {
     }
 
     async findByEmail(email) {
-        return await connection(this.table).where({ email }).first();
+        return await connection(this.table).where({ email }).first()
     }
 }
 
-module.exports = new UserRepository();
+module.exports = new UserRepository()

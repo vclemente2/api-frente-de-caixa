@@ -1,11 +1,22 @@
-const validateUser = (validationsSchema) => async (req, res, next) => {
-    try {
-        await validationsSchema.validateAsync(req.body);
+const userRepository = require('../repositories/UserRepository')
+const ConflictError = require('../errors/ConflictError')
 
-        next();
-    } catch (error) {
-        return res.status(400).json({ mensagem: error.message });
+const validateUserRequiredData = async (req, res, next) => {
+
+    const user = req.user
+    const { email } = req.body
+
+    const alreadyRegisteredUser = await userRepository.findByEmail(email)
+
+    if (alreadyRegisteredUser) {
+        if (!user) throw new ConflictError('Já existe usuário cadastrado com o e-mail informado')
+        if (user.email !== alreadyRegisteredUser.email) throw new ConflictError('O e-mail informado já está sendo utilizado por outro usuário.')
     }
+
+    next()
+
 }
 
-module.exports = validateUser;
+module.exports = {
+    validateUserRequiredData
+}
