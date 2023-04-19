@@ -39,7 +39,6 @@ const createUser = async (req, res) => {
 
 const listCategory = async (req, res) => {
 
-
     const category = await CategoryRepository.findAll()
 
     return res.status(200).json(category)
