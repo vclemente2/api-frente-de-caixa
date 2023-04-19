@@ -19,6 +19,10 @@ const validateUserRequiredData = async (req, res, next) => {
 
         next()
 
+
+
+
+        
     } catch (error) {
         return res.status(500).json({ mensagem: 'Erro interno do servidor' })
     }

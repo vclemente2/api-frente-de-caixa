@@ -3,7 +3,7 @@ const userRepository = require('../repositories/UserRepository')
 
 const createUser = async (req, res) => {
 
-    const { nome,email,senha } = req.body
+    const { nome, email, senha } = req.body
 
     try {
 
@@ -34,7 +34,7 @@ const updateUser = async (req, res) => {
     const { nome, email, senha } = req.body
 
     try {
-        
+
         const encryptedPassword = await bcrypt.hash(senha, 10)
 
         await userRepository.update({ nome, email, senha: encryptedPassword }, req.user.id)
@@ -49,6 +49,6 @@ const updateUser = async (req, res) => {
 
 module.exports = {
     createUser,
-    userProfile, 
+    userProfile,
     updateUser
 }
