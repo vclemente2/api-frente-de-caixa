@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { createUser, updateUser, userProfile } = require('../controllers/userController')
+const { createUser, updateUser, userProfile, listCategory } = require('../controllers/userController')
 const userSchema = require('../schema/userSchema')
 const loginSchema = require('../schema/loginSchema')
 const { validateUserRequiredData } = require('../middlewares/userValidation')
@@ -10,6 +10,7 @@ const { verifyLoggedUser } = require('../middlewares/authMiddleware')
 
 const routes = Router()
 
+routes.get('/categoria', listCategory)
 routes.post('/usuario', validateRequisitionBody(userSchema), validateUserRequiredData, createUser)
 routes.post('/login', validateRequisitionBody(loginSchema), validateUserLogin, userLogin)
 

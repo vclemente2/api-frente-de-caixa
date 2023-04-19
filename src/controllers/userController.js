@@ -1,9 +1,10 @@
 const bcrypt = require('bcrypt')
 const userRepository = require('../repositories/UserRepository')
+const categoryRepository = require('../repositories/CategoryRepository')
 
 const createUser = async (req, res) => {
 
-    const { nome,email,senha } = req.body
+    const { nome, email, senha } = req.body
 
     try {
 
@@ -34,7 +35,7 @@ const updateUser = async (req, res) => {
     const { nome, email, senha } = req.body
 
     try {
-        
+
         const encryptedPassword = await bcrypt.hash(senha, 10)
 
         await userRepository.update({ nome, email, senha: encryptedPassword }, req.user.id)
@@ -47,8 +48,23 @@ const updateUser = async (req, res) => {
 
 }
 
+
+const listCategory = async (req, res) => {
+
+    try {
+        const category = await categoryRepository.findAll()
+
+        return res.status(200).json(category)
+    } catch (error) {
+        return res.status(500).json({ mensagem: 'Erro interno do servidor' });
+    }
+
+
+}
+
 module.exports = {
     createUser,
-    userProfile, 
+    listCategory,
+    userProfile,
     updateUser
 }
