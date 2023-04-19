@@ -1,28 +1,24 @@
 const bcrypt = require('bcrypt')
 const userRepository = require('../repositories/UserRepository')
+const InternalServerError = require('../errors/InternalServerError')
 
 const createUser = async (req, res) => {
 
-    const { nome,email,senha } = req.body
+    const { nome, email, senha } = req.body
 
-    try {
+    const encryptedPassword = await bcrypt.hash(senha, 10)
 
-        const encryptedPassword = await bcrypt.hash(senha, 10)
-
-        const user = await userRepository.create({
-            nome,
-            email,
-            senha: encryptedPassword
-        }, ['id', 'nome', 'email'])
+    const user = await userRepository.create({
+        nome,
+        email,
+        senha: encryptedPassword
+    }, ['id', 'nome', 'email'])
 
 
-        if (!user) return res.status(500).json({ mensagem: 'O usuário não foi cadastrado.' })
+    if (!user) throw new InternalServerError('O usuário não foi cadastrado.')
 
-        return res.status(201).json(user[0])
+    return res.status(201).json(user[0])
 
-    } catch (error) {
-        return res.status(500).json({ mensagem: 'Erro interno do servidor' })
-    }
 }
 
 const userProfile = (req, res) => {
@@ -33,22 +29,16 @@ const updateUser = async (req, res) => {
 
     const { nome, email, senha } = req.body
 
-    try {
-        
-        const encryptedPassword = await bcrypt.hash(senha, 10)
+    const encryptedPassword = await bcrypt.hash(senha, 10)
 
-        await userRepository.update({ nome, email, senha: encryptedPassword }, req.user.id)
+    await userRepository.update({ nome, email, senha: encryptedPassword }, req.user.id)
 
-        return res.status(204).json()
-
-    } catch (error) {
-        return res.status(500).json({ mensagem: 'Erro interno do servidor' })
-    }
+    return res.status(204).json()
 
 }
 
 module.exports = {
     createUser,
-    userProfile, 
+    userProfile,
     updateUser
 }

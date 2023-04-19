@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config()
 
 const connection = require('knex')({
     client: process.env.DB_CLIENT,
@@ -12,4 +12,4 @@ const connection = require('knex')({
     }
 })
 
-module.exports = connection;
+module.exports = connection

@@ -1,29 +1,24 @@
 const bcrypt = require('bcrypt')
 const userRepository = require('../repositories/UserRepository')
+const ForbiddenError = require('../errors/ForbiddenError')
 
 const validateUserLogin = async (req, res, next) => {
 
     const { email, senha } = req.body
 
-    try {
+    const loggedUser = await userRepository.findByEmail(email)
 
-        const loggedUser = await userRepository.findByEmail(email)
+    if (!loggedUser) throw new ForbiddenError('Usuário e/ou senha inválido(s).')
 
-        if(!loggedUser) return res.status(403).json({ mensagem: 'Usuário e/ou senha inválido(s).' })
+    const { senha: senhaUsuario, ...user } = loggedUser
 
-        const { senha: senhaUsuario, ...user } = loggedUser
+    const validPassword = await bcrypt.compare(senha, senhaUsuario)
 
-        const validPassword = await bcrypt.compare(senha, senhaUsuario)
+    if (!validPassword) throw new ForbiddenError('Usuário e/ou senha inválido(s).');
 
-        if (!validPassword) return res.status(403).json({ mensagem: 'Usuário e/ou senha inválido(s).' })
+    req.user = user
 
-        req.user = user
-
-        next()
-        
-    } catch (error) {
-        return res.status(403).json({ mensagem: 'Usuário e/ou senha inválido(s).' })
-    }
+    next()
 }
 
 module.exports = {

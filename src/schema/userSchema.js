@@ -1,4 +1,4 @@
-const joi = require('joi');
+const joi = require('joi')
 
 const userRegistration = joi.object({
     nome: joi.string().min(3).required().messages({
