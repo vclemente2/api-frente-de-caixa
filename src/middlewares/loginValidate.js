@@ -14,7 +14,7 @@ const validateUserLogin = async (req, res, next) => {
 
     const validPassword = await bcrypt.compare(senha, senhaUsuario)
 
-    if (!validPassword) throw new ForbiddenError('Usuário e/ou senha inválido(s).');
+    if (!validPassword) throw new ForbiddenError('Usuário e/ou senha inválido(s).')
 
     req.user = user
 

@@ -1,14 +1,17 @@
 const validateRequisitionBody = validationsSchema => async (req, res, next) => {
 
-    try {
+    await validationsSchema.validateAsync(req.body)
 
-        await validationsSchema.validateAsync(req.body)
+    for (const element in req.body) {
 
-        next()
+        const value = req.body[element]
 
-    } catch (error) {
-        return res.status(422).json({ mensagem: error.message })
+        if (typeof value == 'string') req.body[element] = value.trim()
+
     }
+
+    next()
+
 }
 
 module.exports = {
