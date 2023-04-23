@@ -12,12 +12,13 @@ const createUser = async (req, res) => {
         nome,
         email,
         senha: encryptedPassword
-    }, ['id', 'nome', 'email'])
-
+    })
 
     if (!user) throw new InternalServerError('O usuário não foi cadastrado.')
 
-    return res.status(201).json(user[0])
+    const { senha: _, ...createdUser } = user;
+
+    return res.status(201).json(createdUser)
 
 }
 
