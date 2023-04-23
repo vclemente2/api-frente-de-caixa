@@ -4,7 +4,6 @@ const { userLogin } = require('../controllers/authController')
 const { listCategory } = require('../controllers/categoryController')
 const { validateUserRequiredData } = require('../middlewares/userValidation')
 const { validateRequisitionBody } = require('../middlewares/bodyValidation')
-const { validateUserLogin } = require('../middlewares/loginValidate')
 const { verifyLoggedUser } = require('../middlewares/authMiddleware')
 const userSchema = require('../schema/userSchema')
 const loginSchema = require('../schema/loginSchema')
@@ -13,7 +12,7 @@ const routes = Router()
 
 routes.get('/categoria', listCategory)
 routes.post('/usuario', validateRequisitionBody(userSchema), validateUserRequiredData, createUser)
-routes.post('/login', validateRequisitionBody(loginSchema), validateUserLogin, userLogin)
+routes.post('/login', validateRequisitionBody(loginSchema), userLogin)
 
 routes.use(verifyLoggedUser)
 

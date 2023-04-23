@@ -1,15 +1,15 @@
-require('dotenv').config()
+const { Sequelize } = require('sequelize')
+const databaseConfig = require('../config/databaseConfig')
 
-const connection = require('knex')({
-    client: process.env.DB_CLIENT,
-    connection: {
-        user: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        port: process.env.DB_PORT,
-        database: process.env.DB_NAME,
-        host: process.env.DB_HOST,
-        ssl: { rejectUnauthorized: false }
+const connection = new Sequelize(databaseConfig);
+
+(async () => {
+    try {
+        await connection.authenticate();
+        console.log('Connection has been established successfully.');
+    } catch (error) {
+        console.error('Unable to connect to the database:', error);
     }
-})
+})()
 
 module.exports = connection
