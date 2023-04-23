@@ -21,4 +21,4 @@ const userRegistration = joi.object({
     })
 })
 
-module.exports = userRegistration;
+module.exports = userRegistration
