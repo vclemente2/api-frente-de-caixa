@@ -5,8 +5,8 @@ const connection = require('../connection/database.js')
 User.init(connection)
 
 class UserRepository extends BaseRepository {
-    constructor() {
-        super(User)
+    constructor(model) {
+        super(model)
     }
 
     async findByEmail(email) {
@@ -15,4 +15,6 @@ class UserRepository extends BaseRepository {
     }
 }
 
-module.exports = new UserRepository()
+const userRepository = new UserRepository(User)
+
+module.exports = { userRepository, UserRepository }

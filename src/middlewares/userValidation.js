@@ -1,4 +1,4 @@
-const userRepository = require('../repositories/UserRepository')
+const { userRepository } = require('../repositories/UserRepository')
 const ConflictError = require('../errors/ConflictError')
 
 const validateUserRequiredData = async (req, res, next) => {

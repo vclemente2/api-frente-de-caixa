@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const userRepository = require('../repositories/UserRepository')
+const { userRepository } = require('../repositories/UserRepository')
 const UnauthorizedError = require('../errors/UnauthorizedError')
 
 const verifyLoggedUser = async (req, res, next) => {
