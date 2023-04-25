@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-const userRepository = require('../repositories/UserRepository')
+const { userRepository } = require('../repositories/UserRepository')
 const ForbiddenError = require('../errors/ForbiddenError')
 
 const userLogin = async (req, res) => {
