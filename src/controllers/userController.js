@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt')
-const userRepository = require('../repositories/UserRepository')
+const { userRepository } = require('../repositories/UserRepository')
 const InternalServerError = require('../errors/InternalServerError')
 
 const createUser = async (req, res) => {
