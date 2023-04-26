@@ -3,6 +3,7 @@ const { verifyLoggedUser } = require('../middlewares/authMiddleware')
 const userRoutes = require('./userRoutes')
 const categoryRoutes = require('./categoryRoutes')
 const authRoutes = require('./authRoutes')
+const productRoutes = require('./productRoutes')
 
 const routes = Router()
 
@@ -13,5 +14,6 @@ routes.use('/login', authRoutes)
 routes.use(verifyLoggedUser)
 
 routes.use('/usuario', userRoutes.private)
+routes.use('/produto', productRoutes)
 
 module.exports = routes

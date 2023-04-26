@@ -6,14 +6,13 @@ module.exports = {
 
     const categories = ['Informática', 'Celulares', 'Beleza e Perfumaria', 'Mercado', 'Livros e Papelaria', 'Brinquedos', 'Moda', 'Bebê', 'Games']
 
-    await queryInterface.bulkInsert('categorias', categories.map(category => { return { descricao: category } }))
-
+    return queryInterface.bulkInsert('categorias', categories.map(category => { return { descricao: category } }))
 
   },
 
   async down(queryInterface, Sequelize) {
 
-    await queryInterface.bulkDelete('categorias', null, {});
+    return queryInterface.bulkDelete('categorias', null, {})
 
   }
-}
+};
