@@ -1,15 +1,12 @@
 const BaseRepository = require('./BaseRepository')
-const Category = require('../models/CategoryModel')
 const connection = require('../connection/database')
 
-Category.init(connection)
-
 class CategoryRepository extends BaseRepository {
-    constructor(model) {
-        super(model)
+    constructor(connection) {
+        super(connection.models.categorias)
     }
 }
 
-const categoryRepository = new CategoryRepository(Category)
+const categoryRepository = new CategoryRepository(connection)
 
 module.exports = { categoryRepository, CategoryRepository }
