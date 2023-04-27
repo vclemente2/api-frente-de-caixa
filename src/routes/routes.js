@@ -16,4 +16,5 @@ routes.use(verifyLoggedUser)
 routes.use('/usuario', userRoutes.private)
 routes.use('/produto', productRoutes)
 
+
 module.exports = routes

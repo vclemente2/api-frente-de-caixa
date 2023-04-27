@@ -12,6 +12,16 @@ const createProduct = async (req, res) => {
     return res.status(201).json(product)
 }
 
+const updateProduct = async (req, res) => {
+
+    const product = await productRepository.update(req.body, req.params.id)
+
+    if (!product) throw new InternalServerError('Não foi possível atualizar o produto')
+
+    return res.status(204).send()
+}
+
 module.exports = {
-    createProduct
+    createProduct,
+    updateProduct
 }
