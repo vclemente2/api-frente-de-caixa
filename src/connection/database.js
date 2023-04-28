@@ -1,15 +1,19 @@
-require('dotenv').config()
+const { Sequelize } = require('sequelize')
+const databaseConfig = require('../config/databaseConfig')
 
-const connection = require('knex')({
-    client: process.env.DB_CLIENT,
-    connection: {
-        user: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        port: process.env.DB_PORT,
-        database: process.env.DB_NAME,
-        host: process.env.DB_HOST,
-        ssl: { rejectUnauthorized: false }
-    }
-})
+const Category = require('../models/CategoryModel')
+const User = require('../models/UserModel')
+const Product = require('../models/ProductModel')
+const Customer = require('../models/CustomerModel')
+
+const connection = new Sequelize(databaseConfig)
+
+Category.init(connection)
+User.init(connection)
+Product.init(connection)
+Customer.init(connection)
+
+Category.associate(connection.models)
+Product.associate(connection.models)
 
 module.exports = connection

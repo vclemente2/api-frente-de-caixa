@@ -1,23 +1,23 @@
 const { Router } = require('express')
-const { createUser, updateUser, userProfile } = require('../controllers/userController')
-const { userLogin } = require('../controllers/authController')
-const { listCategory } = require('../controllers/categoryController')
-const { validateUserRequiredData } = require('../middlewares/userValidation')
-const { validateRequisitionBody } = require('../middlewares/bodyValidation')
-const { validateUserLogin } = require('../middlewares/loginValidate')
+
 const { verifyLoggedUser } = require('../middlewares/authMiddleware')
-const userSchema = require('../schema/userSchema')
-const loginSchema = require('../schema/loginSchema')
+
+const userRoutes = require('./userRoutes')
+const categoryRoutes = require('./categoryRoutes')
+const authRoutes = require('./authRoutes')
+const productRoutes = require('./productRoutes')
+const customerRoutes = require('./customerRoutes')
 
 const routes = Router()
 
-routes.get('/categoria', listCategory)
-routes.post('/usuario', validateRequisitionBody(userSchema), validateUserRequiredData, createUser)
-routes.post('/login', validateRequisitionBody(loginSchema), validateUserLogin, userLogin)
+routes.use('/categoria', categoryRoutes)
+routes.use('/usuario', userRoutes.public)
+routes.use('/login', authRoutes)
 
 routes.use(verifyLoggedUser)
 
-routes.get('/usuario', userProfile)
-routes.put('/usuario', validateRequisitionBody(userSchema), validateUserRequiredData, updateUser)
+routes.use('/usuario', userRoutes.private)
+routes.use('/produto', productRoutes)
+routes.use('/cliente', customerRoutes)
 
 module.exports = routes

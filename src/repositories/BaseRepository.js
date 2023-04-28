@@ -1,26 +1,29 @@
-const connection = require('../connection/database')
-
 class BaseRepository {
 
-    constructor(table) {
-        this.table = table
+    constructor(model) {
+        this.model = model
     }
 
     async findAll() {
-        return await connection(this.table)
+        const dbReturn = await this.model.findAll()
+        return dbReturn
     }
-    
+
     async findOne(id) {
-        return await connection(this.table).where({ id }).first()
+        const dbReturn = await this.model.findOne({ where: { id: id } })
+        return dbReturn ? dbReturn.toJSON() : null
     }
-    async create(data, infoArray) {
-        return await connection(this.table).insert(data).returning(infoArray)
+    async create(data) {
+        const dbReturn = await this.model.create(data)
+        return dbReturn ? dbReturn.toJSON() : null
     }
     async update(data, id) {
-        return await connection(this.table).where('id', id).update(data).returning('*')
+        const dbReturn = await this.model.update(data, { where: { id: id } })
+        return dbReturn
     }
     async delete(id) {
-        return await connection(this.table).where({ id })
+        const dbReturn = await this.model.delete({ where: { id: id } })
+        return dbReturn
     }
 }
 

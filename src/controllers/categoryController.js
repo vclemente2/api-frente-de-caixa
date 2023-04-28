@@ -1,4 +1,4 @@
-const categoryRepository = require('../repositories/CategoryRepository')
+const { categoryRepository } = require('../repositories/CategoryRepository')
 
 const listCategory = async (req, res) => {
 

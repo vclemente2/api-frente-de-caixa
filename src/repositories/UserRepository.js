@@ -2,13 +2,16 @@ const BaseRepository = require('./BaseRepository.js')
 const connection = require('../connection/database.js')
 
 class UserRepository extends BaseRepository {
-    constructor() {
-        super('usuarios')
+    constructor(connection) {
+        super(connection.models.usuarios)
     }
 
     async findByEmail(email) {
-        return await connection(this.table).where({ email }).first()
+        const dbReturn = await this.model.findOne({ where: { email: email } })
+        return dbReturn ? dbReturn.toJSON() : null
     }
 }
 
-module.exports = new UserRepository()
+const userRepository = new UserRepository(connection)
+
+module.exports = { userRepository, UserRepository }
