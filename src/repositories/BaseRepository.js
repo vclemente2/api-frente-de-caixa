@@ -25,7 +25,7 @@ class BaseRepository {
     }
 
     async delete(where) {
-        const dbReturn = await this.model.destroy( {where} )
+        const dbReturn = await this.model.destroy({ where })
         return dbReturn
     }
 
