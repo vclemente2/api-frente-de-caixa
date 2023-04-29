@@ -1,7 +1,8 @@
 const InternalServerError = require('../errors/InternalServerError');
 const NotFoundError = require('../errors/NotFoundError');
 const { productRepository } = require('../repositories/ProductRepository');
-const { categoryRepository } = require('../repositories/CategoryRepository')
+const { categoryRepository } = require('../repositories/CategoryRepository');
+const { error } = require('../schema/productSchema');
 
 const createProduct = async (req, res) => {
     const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
@@ -54,9 +55,20 @@ const getOneProduct = async (req, res) => {
     return res.json(product)
 }
 
+const deleteProduct = async (req, res) => {
+    const { id } = req.params
+
+    const product = await productRepository.delete({ id })
+
+    if (!product) throw new NotFoundError('Produto não encontrado')
+
+    return res.status(204).send()
+}
+
 module.exports = {
     createProduct,
     updateProduct,
     getProduct,
-    getOneProduct
+    getOneProduct,
+    deleteProduct
 }
