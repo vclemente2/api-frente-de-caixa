@@ -7,7 +7,7 @@ const userLogin = async (req, res) => {
 
     const { email, senha } = req.body
 
-    const loggedUser = await userRepository.findByEmail(email)
+    const loggedUser = await userRepository.findOne({ email })
 
     if (!loggedUser) throw new ForbiddenError('Usuário e/ou senha inválido(s).')
 

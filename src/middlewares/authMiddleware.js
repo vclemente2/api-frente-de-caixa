@@ -12,7 +12,7 @@ const verifyLoggedUser = async (req, res, next) => {
 
     const { id } = jwt.verify(token, process.env.JWT_HASH)
 
-    const loggedUser = await userRepository.findOne(id)
+    const loggedUser = await userRepository.findOne({ id })
 
     if (!loggedUser) throw new UnauthorizedError('Acesso não autorizado')
 
