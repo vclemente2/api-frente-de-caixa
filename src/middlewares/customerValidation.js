@@ -1,5 +1,6 @@
 const { customerRepository } = require("../repositories/CustomerRepository")
 const ConflictError = require('../errors/ConflictError')
+const NotFoundError = require("../errors/NotFoundError")
 
 const verifyUniqueEmail = async (req, res, next) => {
 
@@ -37,7 +38,20 @@ const verifyUniqueCpf = async (req, res, next) => {
 
 }
 
+const validateCustomerExists = async (req, res, next) => {
+
+    const { id } = req.params
+
+    const customer = await customerRepository.findOne({ id })
+
+    if (!customer) throw new NotFoundError('Cliente não encontrado')
+
+    next()
+
+}
+
 module.exports = {
     verifyUniqueEmail,
-    verifyUniqueCpf
+    verifyUniqueCpf,
+    validateCustomerExists
 }
