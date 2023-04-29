@@ -11,6 +11,17 @@ const createCustomer = async (req, res) => {
 
 }
 
+const updateCustomer = async (req, res) => {
+
+    const customer = await customerRepository.update(req.body, { id: req.params.id })
+
+    if (!customer) throw new InternalServerError('Não foi possível atualizar o cliente')
+
+    return res.status(204).send()
+
+}
+
 module.exports = {
-    createCustomer
+    createCustomer,
+    updateCustomer
 }
