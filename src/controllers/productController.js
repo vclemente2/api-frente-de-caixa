@@ -25,14 +25,14 @@ const updateProduct = async (req, res) => {
 const getProduct = async (req, res) => {
     const { categoria_id } = req.query;
 
-  
+
     if (categoria_id) {
         const category = await categoryRepository.findOne(categoria_id)
 
         if (!category) throw new NotFoundError('Categoria não encontrada')
-      
-        const aproduct = await productRepository.findAll({categoria_id})
-    
+
+        const aproduct = await productRepository.findAll({ categoria_id })
+
         if (!aproduct) throw new NotFoundError('Não há produtos para essa categoria')
 
         return res.json(aproduct)
@@ -42,10 +42,21 @@ const getProduct = async (req, res) => {
 
     return res.json(product)
 
-    }
+}
+
+const getOneProduct = async (req, res) => {
+    const { id } = req.params
+
+    const product = await productRepository.findOne({ id })
+
+    if (!product) throw new NotFoundError('Produto não encontrado')
+
+    return res.json(product)
+}
 
 module.exports = {
     createProduct,
     updateProduct,
-    getProduct
+    getProduct,
+    getOneProduct
 }
