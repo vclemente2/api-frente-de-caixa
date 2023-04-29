@@ -27,7 +27,7 @@ module.exports = {
         unique: true
       },
       cep: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(8),
       },
       rua: {
         type: Sequelize.STRING,

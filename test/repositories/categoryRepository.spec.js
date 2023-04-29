@@ -1,5 +1,5 @@
 const Category = require('../../src/models/CategoryModel')
-const CategoryRepositoryTest = require('./testCategoryRepository')
+const CategoryRepository = require('../../src/repositories/CategoryRepository')
 const testConnection = require('../connection/database')
 
 describe('List categories', () => {
@@ -7,7 +7,7 @@ describe('List categories', () => {
 
     beforeAll(() => {
         Category.init(testConnection)
-        categoryRepository = new CategoryRepositoryTest(Category)
+        categoryRepository = new CategoryRepository(Category)
     })
 
     afterAll(async () => {
