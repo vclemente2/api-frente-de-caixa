@@ -4,8 +4,11 @@ class BaseRepository {
         this.model = model
     }
 
-    async findAll(arrAttributes) {
-        const dbReturn = await this.model.findAll({ attributes: arrAttributes })
+    async findAll(where, arrAtributes) {
+        const dbReturn = await this.model.findAll({
+            where,
+            arrAtributes
+        })
         return dbReturn
     }
 

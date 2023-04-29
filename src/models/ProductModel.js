@@ -15,16 +15,16 @@ class Product extends Model {
                 type: DataTypes.INTEGER,
                 allowNull: false
             },
-            // categoria_id: {
-            //     type: DataTypes.INTEGER,
-            //     allowNull: false,
-            //     references: {
-            //         model: 'categorias',
-            //         key: 'id'
-            //     },
-            //     onUpdate: 'CASCADE',
-            //     onDelete: 'CASCADE'
-            // }
+            categoria_id: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'categorias',
+                    key: 'id'
+                },
+                onUpdate: 'CASCADE',
+                onDelete: 'CASCADE'
+            }
         },
             {
                 sequelize: connection,
