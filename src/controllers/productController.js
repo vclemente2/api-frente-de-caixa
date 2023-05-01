@@ -17,7 +17,6 @@ const createProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
 
     const product = await productRepository.update(req.body, { id: req.params.id })
-
     if (!product) throw new InternalServerError('Não foi possível atualizar o produto')
 
     return res.status(204).send()
@@ -32,11 +31,11 @@ const getProduct = async (req, res) => {
 
         if (!category) throw new NotFoundError('Categoria não encontrada')
 
-        const aproduct = await productRepository.findAll({ categoria_id })
+        const productCategory = await productRepository.findAll({ categoria_id })
 
-        if (!aproduct) throw new NotFoundError('Não há produtos para essa categoria')
+        if (!productCategory) throw new NotFoundError('Não há produtos para essa categoria')
 
-        return res.json(aproduct)
+        return res.json(productCategory)
     }
 
     const product = await productRepository.findAll()
@@ -59,6 +58,7 @@ const deleteProduct = async (req, res) => {
     const { id } = req.params
 
     const product = await productRepository.delete({ id })
+
 
     if (!product) throw new NotFoundError('Produto não encontrado')
 
