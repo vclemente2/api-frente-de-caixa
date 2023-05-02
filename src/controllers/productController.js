@@ -27,7 +27,7 @@ const getProduct = async (req, res) => {
 
 
     if (categoria_id) {
-        const category = await categoryRepository.findOne(categoria_id)
+        const category = await categoryRepository.findOne({ id: categoria_id })
 
         if (!category) throw new NotFoundError('Categoria não encontrada')
 
