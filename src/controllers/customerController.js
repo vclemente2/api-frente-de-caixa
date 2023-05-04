@@ -21,7 +21,15 @@ const updateCustomer = async (req, res) => {
 
 }
 
+const listCostumers = async (req, res) => {
+
+    const customers = await customerRepository.findAll()
+
+    return res.json(customers)
+}
+
 module.exports = {
     createCustomer,
-    updateCustomer
+    updateCustomer, 
+    listCostumers
 }
