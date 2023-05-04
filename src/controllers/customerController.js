@@ -22,14 +22,19 @@ const updateCustomer = async (req, res) => {
 }
 
 const listCostumers = async (req, res) => {
-    
+
     const customers = await customerRepository.findAll()
 
     return res.json(customers)
 }
 
+const customerProfile = async (req, res) => {
+    return res.json(req.customer)
+}
+
 module.exports = {
     createCustomer,
     updateCustomer, 
-    listCostumers
+    listCostumers, 
+    customerProfile
 }
