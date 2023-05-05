@@ -1,11 +1,14 @@
-const { customerRepository } = require("../repositories/CustomerRepository")
+const { customerRepository } = require('../repositories/CustomerRepository')
 const ConflictError = require('../errors/ConflictError')
-const NotFoundError = require("../errors/NotFoundError")
+const NotFoundError = require('../errors/NotFoundError')
+const BadRequestError = require('../errors/BadRequestError')
 
 const verifyUniqueEmail = async (req, res, next) => {
 
     const { id } = req.params
     const { email } = req.body
+
+    if (isNaN(id)) throw new BadRequestError('Informe um ID válido')
 
     const alreadyRegisteredCustomer = await customerRepository.findOne({ email })
 
@@ -25,6 +28,8 @@ const verifyUniqueCpf = async (req, res, next) => {
     const { id } = req.params
     const { cpf } = req.body
 
+    if (isNaN(id)) throw new BadRequestError('Informe um ID válido')
+
     const alreadyRegisteredCustomer = await customerRepository.findOne({ cpf })
 
     if (alreadyRegisteredCustomer) {
@@ -42,9 +47,13 @@ const validateCustomerExists = async (req, res, next) => {
 
     const { id } = req.params
 
+    if (isNaN(id)) throw new BadRequestError('Informe um ID válido')
+
     const customer = await customerRepository.findOne({ id })
 
     if (!customer) throw new NotFoundError('Cliente não encontrado')
+
+    req.customer = customer
 
     next()
 
