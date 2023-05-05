@@ -22,21 +22,21 @@ const customerSchema = joi.object({
         'string.length': 'O campo cpf deve conter onze números',
         'string.pattern.base': 'O campo cpf deve conter um formato de cpf válido'
     }),
-    cep: joi.string().trim().empty('').replace('-', '').pattern(/^[0-9]+$/).length(8).messages({
+    cep: joi.string().trim().empty('').replace('-', '').replace('.', '').pattern(/^[0-9]+$/).length(8).messages({
         'string.base': 'O campo cep deve ser uma string',
         'string.pattern.base': 'O campo cep deve conter um formato de cep válido',
         'string.length': 'O campo cep deve conter 8 números'
     })
     ,
     rua: joi.string().trim().empty('').messages({
-        'string.base': 'O campo cep deve ser uma string'
+        'string.base': 'O campo rua deve ser uma string'
     }),
     numero: joi.string().trim().empty('').pattern(/^[0-9]+$/).messages({
         'string.base': 'O campo numero deve ser uma string',
         'string.pattern.base': 'O campo numero só permite números',
     }),
     bairro: joi.string().trim().empty('').messages({
-        'string.base': 'O campo numero deve ser uma string'
+        'string.base': 'O campo bairro deve ser uma string'
     }),
     cidade: joi.string().trim().empty('').messages({
         'string.base': 'O campo cidade deve ser uma string'
