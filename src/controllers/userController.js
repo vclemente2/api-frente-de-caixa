@@ -32,7 +32,7 @@ const updateUser = async (req, res) => {
 
     const encryptedPassword = await bcrypt.hash(senha, 10)
 
-    await userRepository.update({ nome, email, senha: encryptedPassword }, req.user.id)
+    await userRepository.update({ nome, email, senha: encryptedPassword }, { id: req.user.id })
 
     return res.status(204).json()
 

@@ -6,7 +6,7 @@ const validateUserRequiredData = async (req, res, next) => {
     const user = req.user
     const { email } = req.body
 
-    const alreadyRegisteredUser = await userRepository.findByEmail(email)
+    const alreadyRegisteredUser = await userRepository.findOne({ email })
 
     if (alreadyRegisteredUser) {
         if (!user) throw new ConflictError('Já existe usuário cadastrado com o e-mail informado')

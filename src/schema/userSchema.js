@@ -1,11 +1,12 @@
 const joi = require('joi')
 
 const userRegistration = joi.object({
-    nome: joi.string().min(3).trim().required().messages({
+    nome: joi.string().min(3).trim().pattern(/^[a-záàâãéèêíïóôõöúçñ ]+$/i).required().messages({
         'any.required': 'O campo nome é obrigatório',
         'string.empty': 'O campo nome não pode ser vazio',
         'string.min': 'O campo nome deve ter pelo menos 3 caracteres',
-        'string.base': 'O campo nome deve ser um texto.'
+        'string.base': 'O campo nome deve ser um texto.',
+        'string.pattern.base': 'O campo nome não permite caracteres especiais ou números'
     }),
     email: joi.string().email().trim().required().messages({
         'any.required': 'O campo email é obrigatório',

@@ -1,15 +1,19 @@
 const { Sequelize } = require('sequelize')
 const databaseConfig = require('../config/databaseConfig')
 
-const connection = new Sequelize(databaseConfig);
+const Category = require('../models/CategoryModel')
+const User = require('../models/UserModel')
+const Product = require('../models/ProductModel')
+const Customer = require('../models/CustomerModel')
 
-(async () => {
-    try {
-        await connection.authenticate();
-        console.log('Connection has been established successfully.');
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-    }
-})()
+const connection = new Sequelize(databaseConfig)
+
+Category.init(connection)
+User.init(connection)
+Product.init(connection)
+Customer.init(connection)
+
+Category.associate(connection.models)
+Product.associate(connection.models)
 
 module.exports = connection

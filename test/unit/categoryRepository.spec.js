@@ -1,17 +1,15 @@
-const Category = require('../../src/models/CategoryModel')
-const CategoryRepositoryTest = require('./testCategoryRepository')
+const { CategoryRepository } = require('../../src/repositories/CategoryRepository')
 const testConnection = require('../connection/database')
 
 describe('List categories', () => {
     let categoryRepository
 
     beforeAll(() => {
-        Category.init(testConnection)
-        categoryRepository = new CategoryRepositoryTest(Category)
+        categoryRepository = new CategoryRepository(testConnection)
     })
 
     afterAll(async () => {
-        await categoryRepository.closeConnection()
+        return categoryRepository.closeConnection()
     })
 
     it('Should be able to list all categories', async () => {
