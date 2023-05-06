@@ -8,7 +8,7 @@ const verifyUniqueEmail = async (req, res, next) => {
     const { id } = req.params
     const { email } = req.body
 
-    if (isNaN(id)) throw new BadRequestError('Informe um ID válido')
+    if (id && isNaN(id)) throw new BadRequestError('Informe um ID válido')
 
     const alreadyRegisteredCustomer = await customerRepository.findOne({ email })
 
@@ -19,6 +19,7 @@ const verifyUniqueEmail = async (req, res, next) => {
         if (customer.email !== alreadyRegisteredCustomer.email) throw new ConflictError('O e-mail informado já pertence a outro cliente')
     }
 
+
     next()
 
 }
@@ -28,7 +29,7 @@ const verifyUniqueCpf = async (req, res, next) => {
     const { id } = req.params
     const { cpf } = req.body
 
-    if (isNaN(id)) throw new BadRequestError('Informe um ID válido')
+    if (id && isNaN(id)) throw new BadRequestError('Informe um ID válido')
 
     const alreadyRegisteredCustomer = await customerRepository.findOne({ cpf })
 
@@ -47,7 +48,7 @@ const validateCustomerExists = async (req, res, next) => {
 
     const { id } = req.params
 
-    if (isNaN(id)) throw new BadRequestError('Informe um ID válido')
+    if (id && isNaN(id)) throw new BadRequestError('Informe um ID válido')
 
     const customer = await customerRepository.findOne({ id })
 

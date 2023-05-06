@@ -1,7 +1,12 @@
 const { customerRepository } = require('../repositories/CustomerRepository')
 const InternalServerError = require('../errors/InternalServerError')
+const getAdressByCep = require('../utils/getAdressByCep')
 
 const createCustomer = async (req, res) => {
+
+    if (req.body.cep) {
+        req.body = await getAdressByCep(req.body)
+    }
 
     const customer = await customerRepository.create(req.body)
 
@@ -12,6 +17,10 @@ const createCustomer = async (req, res) => {
 }
 
 const updateCustomer = async (req, res) => {
+
+    if (req.body.cep) {
+        req.body = await getAdressByCep(req.body)
+    }
 
     const customer = await customerRepository.update(req.body, { id: req.params.id })
 
@@ -34,7 +43,7 @@ const customerProfile = async (req, res) => {
 
 module.exports = {
     createCustomer,
-    updateCustomer, 
-    listCostumers, 
+    updateCustomer,
+    listCostumers,
     customerProfile
 }

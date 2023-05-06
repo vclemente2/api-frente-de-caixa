@@ -1,5 +1,5 @@
 const errorMiddleware = (error, req, res, next) => {
-    console.log(error)
+    // console.log(error)
     if (error.name === 'ValidationError') {
         return res.status(422).json({ mensagem: error.message })
     }

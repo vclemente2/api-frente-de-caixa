@@ -10,8 +10,8 @@ const routes = Router()
 routes.post('/', validateRequisitionBody(productSchema), validateCategoryExists, createProduct)
 routes.put('/:id', validateRequisitionBody(productSchema), validateProductExists, validateCategoryExists, updateProduct)
 routes.get('/', getProduct)
-routes.get('/:id', getOneProduct)
-routes.delete('/:id', deleteProduct ) 
+routes.get('/:id', validateProductExists, getOneProduct)
+routes.delete('/:id', validateProductExists, deleteProduct)
 
 
 module.exports = routes
