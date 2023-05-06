@@ -1,5 +1,4 @@
 const InternalServerError = require('../errors/InternalServerError');
-const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 const { productRepository } = require('../repositories/ProductRepository');
 
