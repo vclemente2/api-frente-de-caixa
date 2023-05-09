@@ -20,7 +20,7 @@ class BaseRepository {
     }
 
     async update(data, where) {
-        const dbReturn = await this.model.update(data, { where })
+        const dbReturn = await this.model.update(data, { where, returning: true })
         return dbReturn
     }
 
