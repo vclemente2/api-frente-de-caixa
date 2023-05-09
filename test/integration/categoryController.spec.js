@@ -3,7 +3,7 @@ const app = require('../../src/server')
 const { CategoryRepository } = require('../../src/repositories/CategoryRepository')
 const testConnection = require('../connection/database')
 
-describe('List categories controlle', () => {
+describe('List categories controller - GET /categoria', () => {
     let categoryRepository
 
     beforeAll(() => categoryRepository = new CategoryRepository(testConnection))
