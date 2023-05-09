@@ -4,9 +4,9 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
 
-    const categories = ['Informática', 'Celulares', 'Beleza e Perfumaria', 'Mercado', 'Livros e Papelaria', 'Brinquedos', 'Moda', 'Bebê', 'Games']
+    const categories = require('../../data/categories')
 
-    return queryInterface.bulkInsert('categorias', categories.map(category => { return { descricao: category } }))
+    return queryInterface.bulkInsert('categorias', categories.map(category => { return category }))
 
   },
 
