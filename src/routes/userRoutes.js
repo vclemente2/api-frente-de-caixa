@@ -4,15 +4,15 @@ const { validateUserRequiredData } = require('../middlewares/userValidation')
 const { validateRequisitionBody } = require('../middlewares/bodyValidation')
 const userSchema = require('../schema/userSchema')
 
-const public = Router()
-const private = Router()
+const publicRoute = Router()
+const privateRoute = Router()
 
-public.post('/', validateRequisitionBody(userSchema), validateUserRequiredData, createUser)
+publicRoute.post('/', validateRequisitionBody(userSchema), validateUserRequiredData, createUser)
 
-private.get('/', userProfile)
-private.put('/', validateRequisitionBody(userSchema), validateUserRequiredData, updateUser)
+privateRoute.get('/', userProfile)
+privateRoute.put('/', validateRequisitionBody(userSchema), validateUserRequiredData, updateUser)
 
 module.exports = {
-    private,
-    public
+    privateRoute,
+    publicRoute
 }

@@ -1,5 +1,5 @@
-const { UniqueConstraintError, ValidationError, json } = require('sequelize')
-const { UserRepository, userRepository } = require('../../src/repositories/UserRepository')
+const { UniqueConstraintError, ValidationError } = require('sequelize')
+const { UserRepository } = require('../../src/repositories/UserRepository')
 const testConnection = require('../connection/database')
 const userMock = require('../mock/user.mock')
 
@@ -7,8 +7,6 @@ describe('create user', () => {
     let userRepository;
 
     beforeAll(() => userRepository = new UserRepository(testConnection))
-
-    // afterAll(() => userRepository.closeConnection())
 
     afterEach(async () => userRepository.delete({}))
 
