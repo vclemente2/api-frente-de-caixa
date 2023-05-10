@@ -4,7 +4,7 @@ class Category extends Model {
     static init(connection) {
         super.init({
             descricao: {
-                type: DataTypes.TEXT,
+                type: DataTypes.STRING,
                 allowNull: false,
                 unique: true
             }
@@ -17,7 +17,7 @@ class Category extends Model {
     }
 
     static associate(models) {
-        this.hasMany(models.produtos, { foreignKey: 'categoria_id' })
+        this.hasMany(models.produtos, { foreignKey: 'categoria_id', as: 'categoria' })
     }
 }
 

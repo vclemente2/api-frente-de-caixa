@@ -41,6 +41,10 @@ class Customer extends Model {
                 modelName: 'clientes'
             })
     }
+
+    static associate(models) {
+        this.hasMany(models.pedidos, { foreignKey: 'cliente_id', as: 'cliente' })
+    }
 }
 
 module.exports = Customer
