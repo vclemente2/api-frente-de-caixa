@@ -4,7 +4,7 @@ class Product extends Model {
     static init(connection) {
         super.init({
             descricao: {
-                type: DataTypes.TEXT,
+                type: DataTypes.STRING,
                 allowNull: false
             },
             quantidade_estoque: {
@@ -33,7 +33,8 @@ class Product extends Model {
     }
 
     static associate(models) {
-        this.belongsTo(models.categorias, { foreignKey: 'categoria_id' })
+        this.belongsTo(models.categorias, { foreignKey: 'categoria_id', as: 'categoria' })
+        this.belongsToMany(models.pedidos, { foreignKey: 'pedido_id', through: 'pedido_produtos', as: 'pedidos' })
     }
 }
 
