@@ -43,7 +43,7 @@ class Customer extends Model {
     }
 
     static associate(models) {
-        this.hasMany(models.pedidos, { foreignKey: 'cliente_id', as: 'cliente' })
+        this.hasMany(models.pedidos, { foreignKey: 'cliente_id', as: 'pedidos' })
     }
 }
 

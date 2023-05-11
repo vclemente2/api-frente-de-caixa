@@ -1,4 +1,4 @@
-const { Model, DataTypes } = require('sequelize')
+const { DataTypes, Model } = require('sequelize')
 
 class Order extends Model {
     static init(connection) {
@@ -31,6 +31,7 @@ class Order extends Model {
 
     static associate(models) {
         this.belongsTo(models.clientes, { foreignKey: 'cliente_id', as: 'cliente' })
+        this.belongsToMany(models.produtos, { foreignKey: 'produto_id', through: 'pedido_produtos', as: 'produtos' })
     }
 }
 

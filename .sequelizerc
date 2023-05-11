@@ -1,5 +1,5 @@
 module.exports = {
-    config: ('./src/config/databaseConfig.js'),
+    config: ('./__test__/config/databaseConfig.js'),
     'migrations-path': ('./src/connection/migrations'),
     'seeders-path': ('./src/connection/seeders'),
     'models-path': ('./src/models')
