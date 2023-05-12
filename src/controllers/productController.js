@@ -1,6 +1,7 @@
 const InternalServerError = require('../errors/InternalServerError');
 const BadRequestError = require('../errors/BadRequestError');
 const { productRepository } = require('../repositories/ProductRepository');
+const { deleteFile } = require('../config/storageConfig');
 
 const createProduct = async (req, res) => {
 
@@ -52,6 +53,12 @@ const getOneProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
     const { id } = req.params
+
+    const ImageProduct = await productRepository.findOne({ id })
+    if (ImageProduct.image) {
+        const path = ImageProduct.image.split('/').pop()
+        await deleteFile(path)
+    }
 
     const product = await productRepository.delete({ id })
 
