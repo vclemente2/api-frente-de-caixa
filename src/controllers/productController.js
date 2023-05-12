@@ -54,6 +54,10 @@ const getOneProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
     const { id } = req.params
 
+    const productOrder = await productRepository.findOne({ id })
+
+    if (productOrder) throw new BadRequestError('Não é possível excluir um produto que está vinculado a um pedido')
+
     const ImageProduct = await productRepository.findOne({ id })
     if (ImageProduct.image) {
         const path = ImageProduct.image.split('/').pop()
