@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/EdframGuerra/desafio-backend-final-dbe-b2b-t03-ifood#readme",
   "dependencies": {
+    "aws-sdk": "^2.1377.0",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
