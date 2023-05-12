@@ -4,16 +4,16 @@ class User extends Model {
     static init(connection) {
         super.init({
             nome: {
-                type: DataTypes.TEXT,
+                type: DataTypes.STRING,
                 allowNull: false
             },
             email: {
-                type: DataTypes.TEXT,
+                type: DataTypes.STRING,
                 allowNull: false,
                 unique: true
             },
             senha: {
-                type: DataTypes.TEXT,
+                type: DataTypes.STRING,
                 allowNull: false
             }
         },
