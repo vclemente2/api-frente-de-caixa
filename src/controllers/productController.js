@@ -2,6 +2,8 @@ const InternalServerError = require('../errors/InternalServerError');
 const BadRequestError = require('../errors/BadRequestError');
 const { productRepository } = require('../repositories/ProductRepository');
 const { deleteFile } = require('../config/storageConfig');
+const Order = require('../models/OrderModel');
+const Product = require('../models/ProductModel');
 
 const createProduct = async (req, res) => {
 
@@ -54,10 +56,14 @@ const getOneProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
     const { id } = req.params
 
-    const productOrder = await productRepository.findOne({ id })
+    const productOrder = await productRepository.findAll({ where: { id }, include: { model: Order, as: 'pedidos' } })
 
-    if (productOrder) throw new BadRequestError('Não é possível excluir um produto que está vinculado a um pedido')
+    // return res.json(productOrder)
 
+    if (productOrder[0].pedidos.length) throw new BadRequestError('Não é possível excluir um produto que está vinculado a um pedido')
+
+
+    return res.json('Passou')
     const ImageProduct = await productRepository.findOne({ id })
     if (ImageProduct.image) {
         const path = ImageProduct.image.split('/').pop()
