@@ -11,8 +11,8 @@ const s3 = new aws.S3({
 })
 
 const uploadFile = async (path, buffer, mimetype) => {
-    
-    const arquivo = await s3.upload({
+
+    const file = await s3.upload({
         Bucket: process.env.BACKBLAZE_BUCKET,
         Key: path,
         Body: buffer,
@@ -20,29 +20,30 @@ const uploadFile = async (path, buffer, mimetype) => {
     }).promise();
 
     return {
-        url: arquivo.Location,
-        path: arquivo.Key
+        url: file.Location,
+        path: file.Key
     };
 }
 
 const getFile = async () => {
-    const arquivo = await s3.listObjects({
+    const file = await s3.listObjects({
         Bucket: process.env.BACKBLAZE_BUCKET,
     }).promise()
 
-    const file = arquivo.Contents.filter((file) => {
+    const fileKey = file.Contents.filter((file) => {
         return file.Key;
     })
-    return file;
+    return fileKey;
 
 }
 
 const deleteFile = async (path) => {
-    const arquivo = await s3.deleteObject({
+    const deletedFile = await s3.deleteObject({
         Bucket: process.env.BACKBLAZE_BUCKET,
         Key: path
     }).promise()
 
+    return deletedFile
 }
 
 
