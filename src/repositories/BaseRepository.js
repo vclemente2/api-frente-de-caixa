@@ -5,12 +5,12 @@ class BaseRepository {
     }
 
     async findAll(where, arrAttributes) {
-        const dbReturn = await this.model.findAll({ ...where, arrAttributes })
+        const dbReturn = await this.model.findAll({ where, ...arrAttributes })
         return dbReturn
     }
 
     async findOne(where, includes = []) {
-        const dbReturn = await this.model.findOne({ where, includes })
+        const dbReturn = await this.model.findOne({ where, ...includes })
         return dbReturn ? dbReturn.toJSON() : null
     }
 
@@ -26,6 +26,11 @@ class BaseRepository {
 
     async delete(where) {
         const dbReturn = await this.model.destroy({ where })
+        return dbReturn
+    }
+
+    async bulkCreate(arrData) {
+        const dbReturn = await this.model.bulkCreate(arrData)
         return dbReturn
     }
 

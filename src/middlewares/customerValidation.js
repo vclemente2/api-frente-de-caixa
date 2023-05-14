@@ -46,11 +46,15 @@ const verifyUniqueCpf = async (req, res, next) => {
 
 const validateCustomerExists = async (req, res, next) => {
 
+    const { cliente_id } = req.body
     const { id } = req.params
 
     if (id && isNaN(id)) throw new BadRequestError('Informe um ID válido')
 
-    const customer = await customerRepository.findOne({ id })
+    const customer = cliente_id ?
+        await customerRepository.findOne({ id: cliente_id }) :
+        await customerRepository.findOne({ id })
+
 
     if (!customer) throw new NotFoundError('Cliente não encontrado')
 

@@ -55,7 +55,7 @@ const getOneProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
     const { id } = req.params
 
-    const product = await productRepository.findAll({ where: { id }, include: { model: Order, as: 'pedidos' } })
+    const product = await productRepository.findAll({ id }, { include: { model: Order, as: 'pedidos' } })
 
     if (product[0].pedidos.length) throw new BadRequestError('Não é possível excluir um produto que está vinculado a um pedido')
 

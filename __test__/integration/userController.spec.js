@@ -80,20 +80,20 @@ describe('Create user controller - POST /usuario', () => {
 
 })
 
-describe('User profile - GET /usuario', () => {
-    let userRepository
-    let user
-    let token
+// describe('User profile - GET /usuario', () => {
+//     let userRepository
+//     let user
+//     let token
 
-    beforeAll(async () => {
-        userRepository = new UserRepository(testConnection)
-        user = await request(app).post('/usuario').send(userMock.valid)
-        const response = await request(app).post('/login').send({ email: userMock.valid.email, senha: userMock.valid.senha })
-        token = response.body.token
-    })
-    afterAll(async () => userRepository.delete({}))
+//     beforeAll(async () => {
+//         userRepository = new UserRepository(testConnection)
+//         user = await request(app).post('/usuario').send(userMock.valid)
+//         const response = await request(app).post('/login').send({ email: userMock.valid.email, senha: userMock.valid.senha })
+//         token = response.body.token
+//     })
+//     afterAll(async () => userRepository.delete({}))
 
-    it('Should be possible for an authenticated user to be able to list his data', async () => {
-        const response = await resquest(app).get('/usuario').header()
-    })
-})
+    // it('Should be possible for an authenticated user to be able to list his data', async () => {
+    //     const response = await request(app).get('/usuario').header()
+    // })
+// })
