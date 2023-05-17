@@ -1,8 +1,9 @@
 const InternalServerError = require('../errors/InternalServerError');
 const BadRequestError = require('../errors/BadRequestError');
 const { productRepository } = require('../repositories/ProductRepository');
-const { deleteFile } = require('../config/storageConfig');
+const { deleteFile, uploadFile } = require('../config/storageConfig');
 const Order = require('../models/OrderModel');
+const { v4: uuidv4 } = require('uuid');
 
 const createProduct = async (req, res) => {
 
@@ -14,12 +15,38 @@ const createProduct = async (req, res) => {
 }
 
 const updateProduct = async (req, res) => {
+    const { file } = req
+    const { id } = req.params
 
-    const product = await productRepository.update(req.body, { id: req.params.id })
-    if (!product) throw new InternalServerError('Não foi possível atualizar o produto')
+    //verificar se o produto existe
+    const product = await productRepository.findOne({ id: req.params.id })
+
+    if (!product) throw new BadRequestError('Produto não encontrado')
+
+    //verificar se o produto tem imagem cadastrada, se tiver imagem cadastrada, deletar a imagem antiga
+    if (product.produto_imagem) {
+        const path = product.produto_imagem.split('/').slice(3).join('/')
+        await deleteFile(path)
+    }
+
+    // verificar se o produto tem imagem nova, se tiver, fazer upload de imagem no servidor de imagem e atualizar o campo produto_imagem
+    if (file) {
+        await uploadFile(uuidv4(), file.buffer, file.mimetype)
+       
+        await productRepository.update({ produto_imagem: file.location }, { id: req.params.id })
+    }
+
+    // verificar se o produto novo não tem imagem, e atribuir o valor null ao campo produto_imagem
+    if (!file) {
+        await productRepository.update({ produto_imagem: null }, { id: req.params.id })
+    }
+    // atualizar o produto
+    const updatedProduct = await productRepository.update(req.body, { id: req.params.id })
+    if (!updatedProduct) throw new InternalServerError('Não foi possível atualizar o produto')
 
     return res.status(204).send()
 }
+
 
 const getProduct = async (req, res) => {
     const { categoria_id } = req.query;
