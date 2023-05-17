@@ -43,7 +43,6 @@ const getFile = async () => {
     return url;
 }
 
-
 const deleteFile = async (path) => {
     const deletedFile = await s3.deleteObject({
         Bucket: process.env.BACKBLAZE_BUCKET,
@@ -52,7 +51,6 @@ const deleteFile = async (path) => {
 
     return deletedFile
 }
-
 
 module.exports = {
     uploadFile,
