@@ -1,7 +1,10 @@
+require('dotenv').config()
 const { productRepository } = require('../repositories/ProductRepository')
 const { orderRepository } = require('../repositories/OrderRepository')
 const { orderProductRepository } = require('../repositories/OrderProductRepository')
 const { Sequelize, Op } = require('sequelize')
+const transporter = require('../config/mailConfig')
+const generateStringHtml = require('../utils/htmlCompiler')
 const InternalServerError = require('../errors/InternalServerError')
 const Customer = require('../models/CustomerModel')
 const NotFoundError = require('../errors/NotFoundError')
@@ -9,10 +12,6 @@ const ConflictError = require('../errors/ConflictError')
 
 const createOrder = async (req, res) => {
     const { cliente_id, observacao, pedido_produtos } = req.body
-
-    /*
-    5 - Enviar e-mail para o cliente notificando que o pedido foi efetuado com sucesso.
-    */
 
     const idProducts = pedido_produtos.map((product) => { return product.produto_id })
 
@@ -67,16 +66,43 @@ const createOrder = async (req, res) => {
 
     const orderData = await orderRepository.findOne({ id: order.id }, { include: { model: Customer, as: 'cliente' } })
 
-    return res.status(201).json({
+    const orderResponse = {
         id: orderData.id,
         dados_cliente: {
             cliente: orderData.cliente.nome,
             cpf: orderData.cliente.cpf,
-            observacao: orderData.observacao
         },
         itens_pedido: productData,
-        valor_total: orderData.valor_total
-    })
+        valor_total: orderData.valor_total,
+        observacao: orderData.observacao
+    }
+
+    const mailContent = await generateStringHtml('./src/templates/OrderSuccessfullyCompleted.html', {
+        customerName: orderResponse.dados_cliente.cliente,
+        total: (orderResponse.valor_total / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
+        tableData: productData
+            .map((product) => {
+                return `
+                    <tr>
+                        <td>${product.descricao}</td>
+                        <td>${product.quantidade_produto}</td>
+                        <td>${(product.valor_produto / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                        <td>${((product.quantidade_produto * product.valor_produto) / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                    </tr>
+                `;
+            })
+            .join(''),
+    });
+
+    transporter.sendMail({
+        from: `${process.env.MAIL_NAME} <${process.env.MAIL_FROM}>`,
+        to: `${orderResponse.dados_cliente.cliente} <${orderData.cliente.email}>`,
+        subject: `${orderResponse.dados_cliente.cliente}, Seu Pedido Foi Concluído!`,
+        html: mailContent,
+    });
+
+
+    return res.status(201).json(orderResponse)
 }
 
 const listOrders = async (req, res) => {
