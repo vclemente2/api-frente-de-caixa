@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #666;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #eee;
+            font-weight: bold;
+            text-align: left;
+            padding: 8px;
+        }
+
+        td {
+            padding: 8px;
+        }
+
+        .total-row {
+            background-color: #eee;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>{{customerName}}, seu pedido foi efetuado com sucesso!</h1>
+    <h2>Abaixo detalhes do seu pedido</h2>
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Quantidade</th>
+            <th>Valor Unitário</th>
+            <th>Valor Total</th>
+        </tr>
+        {{{tableData}}}
+        <tr class="total-row">
+            <td>
+                <strong>TOTAL</strong>
+            </td>
+            <td></td>
+            <td></td>
+            <td>{{total}}</td>
+        </tr>
+    </table>
+</body>
+
+</html>

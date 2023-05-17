@@ -1,6 +1,8 @@
 const InternalServerError = require('../errors/InternalServerError');
 const BadRequestError = require('../errors/BadRequestError');
 const { productRepository } = require('../repositories/ProductRepository');
+const { deleteFile } = require('../config/storageConfig');
+const Order = require('../models/OrderModel');
 
 const createProduct = async (req, res) => {
 
@@ -53,9 +55,18 @@ const getOneProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
     const { id } = req.params
 
-    const product = await productRepository.delete({ id })
+    const product = await productRepository.findAll({ id }, { include: { model: Order, as: 'pedidos' } })
 
-    if (!product) throw new InternalServerError('Não foi possível excluir o produto')
+    if (product[0].pedidos.length) throw new BadRequestError('Não é possível excluir um produto que está vinculado a um pedido')
+
+    if (product.produto_imagem) {
+        const path = product.produto_imagem.split('/').pop()
+        await deleteFile(path)
+    }
+
+    const deletedProduct = await productRepository.delete({ id })
+
+    if (!deletedProduct) throw new InternalServerError('Não foi possível excluir o produto')
 
     return res.status(204).send()
 }

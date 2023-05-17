@@ -31,7 +31,7 @@ class Order extends Model {
 
     static associate(models) {
         this.belongsTo(models.clientes, { foreignKey: 'cliente_id', as: 'cliente' })
-        this.belongsToMany(models.produtos, { foreignKey: 'produto_id', through: 'pedido_produtos', as: 'produtos' })
+        this.belongsToMany(models.produtos, { foreignKey: 'pedido_id', through: 'pedido_produtos', as: 'produtos' })
     }
 }
 

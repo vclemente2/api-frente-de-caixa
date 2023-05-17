@@ -7,6 +7,8 @@ const categoryRoutes = require('./categoryRoutes')
 const authRoutes = require('./authRoutes')
 const productRoutes = require('./productRoutes')
 const customerRoutes = require('./customerRoutes')
+const orderRoutes = require('./orderRoutes')
+const imagesRoutes = require('./imagesRoutes')
 
 const routes = Router()
 
@@ -19,6 +21,8 @@ routes.use(verifyLoggedUser)
 routes.use('/usuario', userRoutes.privateRoute)
 routes.use('/produto', productRoutes)
 routes.use('/cliente', customerRoutes)
+routes.use('/pedido', orderRoutes)
+routes.use('/arquivo', imagesRoutes)
 
 
 module.exports = routes

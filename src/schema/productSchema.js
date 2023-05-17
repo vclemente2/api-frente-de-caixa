@@ -24,7 +24,10 @@ const productSchema = joi.object({
         'number.greater': 'O campo categoria_id deve ser um número positivo',
         'number.base': 'O campo categoria_id deve ser um número',
         'number.integer': 'O campo categoria_id deve ser um número inteiro'
-    })
+    }),
+    produto_imagem: joi.string().empty('').messages({
+        'string.base': 'O campo produto_imagem deve ser uma string'
+    }),
 
 })
 

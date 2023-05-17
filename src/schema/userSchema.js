@@ -19,7 +19,9 @@ const userRegistration = joi.object({
         'string.empty': 'O campo senha não pode ser vazio',
         'string.min': 'O campo senha deve ter pelo menos 6 caracteres',
         'string.base': 'O campo senha deve ser um texto.'
-    })
+    }),
+    
+
 })
 
 module.exports = userRegistration
