@@ -79,6 +79,32 @@ const createOrder = async (req, res) => {
     })
 }
 
+const listOrders = async (req, res) => {
+    const { cliente_id } = req.query
+
+    if (cliente_id) {
+        if (typeof cliente_id === 'object') {
+            cliente_id.forEach((cliente) => { if (isNaN(cliente)) throw new BadRequestError('O campo ID deve ser do tipo número') })
+        }
+
+        const orders = await orderRepository.findAll({ cliente_id }, { include: { model: Customer, as: 'cliente' } })
+
+        if (!orders.length) throw new NotFoundError('Nenhum pedido encontrado')
+
+        return res.status(200).json(orders)
+    }
+
+    const orders = await orderRepository.findAll({}, { include: { model: Customer, as: 'cliente' } })
+
+    if (!orders.length) throw new NotFoundError('Nenhum pedido encontrado')
+
+    return res.status(200).json(orders)
+
+}
+
+
+
 module.exports = {
-    createOrder
+    createOrder,
+    listOrders
 }
