@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const { imageUploadController, imageGetController } = require('../controllers/imageController')
-const multer = require('../multer')
+const multer = require('../config/multer')
 
 const routes = Router()
 
