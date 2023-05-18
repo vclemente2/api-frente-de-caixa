@@ -1,11 +1,20 @@
 const InternalServerError = require('../errors/InternalServerError');
 const BadRequestError = require('../errors/BadRequestError');
 const { productRepository } = require('../repositories/ProductRepository');
-const { deleteFile, uploadFile } = require('../config/storageConfig');
+const { deleteFile, getFile } = require('../config/storageConfig');
 const Order = require('../models/OrderModel');
-const { v4: uuidv4 } = require('uuid');
+const NotFoundError = require('../errors/NotFoundError');
 
 const createProduct = async (req, res) => {
+    if (req.body.produto_imagem) {
+        const images = await getFile()
+
+        const imageExists = images.find((image) => {
+            return image.url === req.body.produto_imagem
+        })
+
+        if (!imageExists) throw new NotFoundError('Imagem não localizada')
+    }
 
     const product = await productRepository.create(req.body)
 
@@ -17,23 +26,26 @@ const createProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
     const { id } = req.params
 
-    //verificar se o produto existe
     const product = await productRepository.findOne({ id })
 
     if (!product) throw new BadRequestError('Produto não encontrado')
 
-
-    //verificar se o produto tem imagem cadastrada, se tiver imagem cadastrada, deletar a imagem antiga
     if (req.body.produto_imagem) {
-        if (product.produto_imagem) {
-            const path = product.produto_imagem.split('/').slice(3).join('/')
-            await deleteFile(path)
-        }
-        await productRepository.update(req.body, { id: req.params.id })
+        const images = await getFile()
 
-        return res.status(204).send()
+        const imageExists = images.find((image) => {
+            return image.url === req.body.produto_imagem
+        })
+
+        if (!imageExists) throw new NotFoundError('Imagem não localizada')
+    } else {
+        req.body.produto_imagem = null
     }
-    req.body.produto_imagem = null
+
+    if (product.produto_imagem) {
+        const path = product.produto_imagem.split('/').slice(3).join('/')
+        deleteFile(path)
+    }
 
     await productRepository.update(req.body, { id: req.params.id })
 
@@ -78,9 +90,9 @@ const deleteProduct = async (req, res) => {
 
     if (product[0].pedidos.length) throw new BadRequestError('Não é possível excluir um produto que está vinculado a um pedido')
 
-    if (product.produto_imagem) {
-        const path = product.produto_imagem.split('/').slice(3).join('/')
-        await deleteFile(path)
+    if (product[0].produto_imagem) {
+        const path = product[0].produto_imagem.split('/').slice(3).join('/')
+        deleteFile(path)
     }
 
     const deletedProduct = await productRepository.delete({ id })

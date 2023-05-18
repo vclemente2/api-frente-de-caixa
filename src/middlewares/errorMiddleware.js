@@ -8,6 +8,10 @@ const errorMiddleware = (error, req, res, next) => {
         return res.status(401).json({ mensagem: 'Para acessar este recurso um token de autenticação válido deve ser enviado.' })
     }
 
+    if (error.name === 'MulterError') {
+        return res.status(400).json({ mensagem: 'É necessátrio informar a propriedade imagem' })
+    }
+
     const status = error.statusCode || 500
     const message = error.statusCode ? error.message : 'Erro interno do servidor.'
 
