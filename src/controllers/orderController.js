@@ -9,6 +9,8 @@ const InternalServerError = require('../errors/InternalServerError')
 const Customer = require('../models/CustomerModel')
 const NotFoundError = require('../errors/NotFoundError')
 const ConflictError = require('../errors/ConflictError')
+const Product = require('../models/ProductModel')
+const BadRequestError = require('../errors/BadRequestError')
 
 const createOrder = async (req, res) => {
     const { cliente_id, observacao, pedido_produtos } = req.body
@@ -80,6 +82,7 @@ const createOrder = async (req, res) => {
     const mailContent = await generateStringHtml('./src/templates/OrderSuccessfullyCompleted.html', {
         customerName: orderResponse.dados_cliente.cliente,
         total: (orderResponse.valor_total / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
+        orderId: String(orderResponse.id).padStart(6, '0'),
         tableData: productData
             .map((product) => {
                 return `
@@ -110,25 +113,54 @@ const listOrders = async (req, res) => {
 
     if (cliente_id) {
         if (typeof cliente_id === 'object') {
-            cliente_id.forEach((cliente) => { if (isNaN(cliente)) throw new BadRequestError('O campo ID deve ser do tipo número') })
+            cliente_id.forEach((id) => { if (isNaN(id)) throw new BadRequestError('O campo ID deve ser do tipo número') })
         }
-
-        const orders = await orderRepository.findAll({ cliente_id }, { include: { model: Customer, as: 'cliente' } })
-
-        if (!orders.length) throw new NotFoundError('Nenhum pedido encontrado')
-
-        return res.status(200).json(orders)
+        else if (isNaN(cliente_id)) throw new BadRequestError('Informe um ID válido')
     }
 
-    const orders = await orderRepository.findAll({}, { include: { model: Customer, as: 'cliente' } })
+    const orders = cliente_id ?
+        await orderRepository.findAll(
+            { cliente_id }
+            ,
+            {
+                include: {
+                    model: Product,
+                    as: 'produtos',
+                    attributes: ['id']
+                }
+            })
+        :
+        await orderRepository.findAll(
+            {}
+            ,
+            {
+                include: {
+                    model: Product,
+                    as: 'produtos',
+                    attributes: ['id']
+                }
+            })
 
-    if (!orders.length) throw new NotFoundError('Nenhum pedido encontrado')
 
-    return res.status(200).json(orders)
+    const response = orders.map((order) => {
+        return {
+            pedido: {
+                id: order.id,
+                valor_total: order.valor_total,
+                observacao: order.observacao,
+                cliente_id: order.cliente_id,
+            },
+            pedido_produtos: order.produtos.map(product => {
+                return {
+                    id: product.id,
+                    ...(product.pedido_produtos.toJSON())
+                }
+            })
+        }
+    })
 
+    return res.json(response)
 }
-
-
 
 module.exports = {
     createOrder,
