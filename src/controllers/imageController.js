@@ -10,6 +10,12 @@ const imageUploadController = async (req, res) => {
     const { file } = req
 
     if (!file) throw new BadRequestError('Campo imagem deve ser preenchido')
+    if (file.mimetype !== 'image/jpg' && 
+        file.mimetype !== 'image/png' && 
+        file.mimetype !== 'image/jpeg' && 
+        file.mimetype !== 'image/webp' && 
+        file.mimetype !== 'image/svg') 
+        throw new BadRequestError('Formato de arquivo inválido')
 
     const ImageFile = await uploadFile(uuidv4(), file.buffer, file.mimetype)
 
@@ -29,4 +35,4 @@ const imageGetController = async (req, res) => {
 module.exports = {
     imageUploadController,
     imageGetController
-};
+}

@@ -40,7 +40,7 @@ const getFile = async () => {
         }
     })
 
-    return url;
+    return url
 }
 
 const deleteFile = async (path) => {
