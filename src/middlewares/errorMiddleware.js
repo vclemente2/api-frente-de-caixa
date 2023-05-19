@@ -9,7 +9,7 @@ const errorMiddleware = (error, req, res, next) => {
     }
 
     if (error.name === 'MulterError') {
-        return res.status(400).json({ mensagem: 'É necessátrio informar a propriedade imagem' })
+        return res.status(400).json({ mensagem: 'É necessário informar a propriedade imagem' })
     }
 
     const status = error.statusCode || 500
