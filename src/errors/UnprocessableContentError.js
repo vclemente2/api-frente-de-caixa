@@ -1,9 +1,9 @@
-const BaseError = require('./BaseError');
+const BaseError = require('./BaseError')
 
 class UnprocessableContentError extends BaseError {
     constructor(message) {
-        super(message, 422);
+        super(message, 422)
     }
 }
 
-module.exports = UnprocessableContentError;
+module.exports = UnprocessableContentError

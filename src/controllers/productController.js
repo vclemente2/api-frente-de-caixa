@@ -1,9 +1,9 @@
-const InternalServerError = require('../errors/InternalServerError');
-const BadRequestError = require('../errors/BadRequestError');
-const { productRepository } = require('../repositories/ProductRepository');
-const { deleteFile, getFile } = require('../config/storageConfig');
-const Order = require('../models/OrderModel');
-const NotFoundError = require('../errors/NotFoundError');
+const InternalServerError = require('../errors/InternalServerError')
+const BadRequestError = require('../errors/BadRequestError')
+const { productRepository } = require('../repositories/ProductRepository')
+const { deleteFile, getFile } = require('../config/storageConfig')
+const Order = require('../models/OrderModel')
+const NotFoundError = require('../errors/NotFoundError')
 
 const createProduct = async (req, res) => {
     if (req.body.produto_imagem) {
@@ -53,7 +53,7 @@ const updateProduct = async (req, res) => {
 }
 
 const getProduct = async (req, res) => {
-    const { categoria_id } = req.query;
+    const { categoria_id } = req.query
 
     if (categoria_id) {
         if (typeof categoria_id === 'object') {

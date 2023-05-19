@@ -7,7 +7,7 @@ const orderSchema = joi.object({
         'number.integer': 'O campo cliente_id deve ser um número inteiro',
         'number.greater': 'O campo cliente_id deve ser um número positivo'
     }),
-    observacao: joi.string().messages({
+    observacao: joi.string().allow('').messages({
         'string.base': 'O campo observacao deve ser um texto',
     }),
 
@@ -29,7 +29,8 @@ const orderSchema = joi.object({
     ).required().messages({
         'any.required': 'O campo pedido_produtos é obrigatório',
         'array.base': 'O campo pedido_produtos deve ser um array',
-        'array.items': 'O campo pedido_produtos deve ser um array de objetos'
+        'array.items': 'O campo pedido_produtos deve ser um array de objetos',
+        'object.base': 'Os itens do array pedido_produtos devem ser objetos'
     }),
 })
 

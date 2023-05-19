@@ -1,8 +1,8 @@
-const { uploadFile, getFile, deleteFile } = require('../config/storageConfig')
+const { uploadFile, getFile } = require('../config/storageConfig')
 const InternalServerError = require('../errors/InternalServerError')
 const BadRequestError = require('../errors/BadRequestError')
 const NotFoundError = require('../errors/NotFoundError')
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require('uuid')
 
 
 const imageUploadController = async (req, res) => {

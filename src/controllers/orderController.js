@@ -92,17 +92,17 @@ const createOrder = async (req, res) => {
                         <td>${(product.valor_produto / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
                         <td>${((product.quantidade_produto * product.valor_produto) / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
                     </tr>
-                `;
+                `
             })
             .join(''),
-    });
+    })
 
     transporter.sendMail({
         from: `${process.env.MAIL_NAME} <${process.env.MAIL_FROM}>`,
         to: `${orderResponse.dados_cliente.cliente} <${orderData.cliente.email}>`,
         subject: `${orderResponse.dados_cliente.cliente}, Seu Pedido Foi Concluído!`,
         html: mailContent,
-    });
+    })
 
 
     return res.status(201).json(orderResponse)

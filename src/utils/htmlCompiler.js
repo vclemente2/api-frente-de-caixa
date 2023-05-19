@@ -1,12 +1,12 @@
-const handlebars = require('handlebars');
-const fs = require('fs/promises');
+const handlebars = require('handlebars')
+const fs = require('fs/promises')
 
 const generateStringHtml = async (file, context) => {
-    const fileContent = await fs.readFile(file);
-    const compiler = handlebars.compile(fileContent.toString());
-    const mailContent = compiler(context);
+    const fileContent = await fs.readFile(file)
+    const compiler = handlebars.compile(fileContent.toString())
+    const mailContent = compiler(context)
 
-    return mailContent;
+    return mailContent
 };
 
-module.exports = generateStringHtml;
+module.exports = generateStringHtml

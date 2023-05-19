@@ -16,7 +16,7 @@ const createUser = async (req, res) => {
 
     if (!user) throw new InternalServerError('O usuário não foi cadastrado.')
 
-    const { senha: _, ...createdUser } = user;
+    const { senha: _, ...createdUser } = user
 
     return res.status(201).json(createdUser)
 
