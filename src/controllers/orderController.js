@@ -28,7 +28,7 @@ const createOrder = async (req, res) => {
             if (id === product.produto_id) {
                 if (quantidade_estoque < product.quantidade_produto) {
                     throw new ConflictError(
-                        `O produto ${descricao} não possui estoque suficiente. Quantidade solicitada ${product.quantidade_produto}, quantidade em estoque ${quantidade_estoque}`
+                        `O produto ${descricao} (ID: ${id}) não possui estoque suficiente. Quantidade solicitada ${product.quantidade_produto}, quantidade em estoque ${quantidade_estoque}`
                     )
                 }
                 data = { descricao, ...product, valor_produto: valor, }
@@ -72,7 +72,8 @@ const createOrder = async (req, res) => {
         id: orderData.id,
         dados_cliente: {
             cliente: orderData.cliente.nome,
-            cpf: orderData.cliente.cpf,
+            email: orderData.cliente.email,
+            cpf: orderData.cliente.cpf
         },
         itens_pedido: productData,
         valor_total: orderData.valor_total,
