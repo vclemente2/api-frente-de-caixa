@@ -179,9 +179,9 @@ Cadastra um novo usuário no sistema.
 `HTTP 201 Created`
 ```JSON
 {
-	"id": 1,
-	"nome": "José",
-	"email": "jose@example.com"
+    "id": 1,
+    "nome": "José",
+    "email": "jose@example.com"
 }
 ```
 
@@ -208,10 +208,10 @@ Permite que um usuário cadastrado faça login no sistema.
 `HTTP 200 Ok`
 ```JSON
 {
-	"id": 1,
-	"nome": "José",
-	"email": "jose@example.com",
-	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg0NDU2NDczLCJleHAiOjE2ODQ0ODUyNzN9.-xOmwZ5REcAOKX76EW1fzk4G9nBvhWhjdWwiDcC58Eo"
+    "id": 1,
+    "nome": "José",
+    "email": "jose@example.com",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg0NDU2NDczLCJleHAiOjE2ODQ0ODUyNzN9.-xOmwZ5REcAOKX76EW1fzk4G9nBvhWhjdWwiDcC58Eo"
 }
 ```
 
@@ -233,9 +233,9 @@ Retorna os dados do perfil do usuário logado.
 `HTTP 200 Ok`
 ```JSON
 {
-	"id": 1,
-	"nome": "José",
-	"email": "jose@example.com"
+    "id": 1,
+    "nome": "José",
+    "email": "jose@example.com"
 }
 ```
 
@@ -417,7 +417,7 @@ Permite ao usuário logado cadastrar um novo cliente no sistema.
     "email": "maria@example.com",
     "cpf": "12345678901",
     "cep": "22750180",
-	"numero": "10",
+    "numero": "10",
 }
 ```
 #### **Resposta de sucesso:**
@@ -430,10 +430,10 @@ Permite ao usuário logado cadastrar um novo cliente no sistema.
     "cpf": "12345678901",
     "cep": "22750180",
     "numero": "10",
-	"rua": "Rua Zanoni Ferrite",
-	"bairro": "Anil",
-	"cidade": "Rio de Janeiro",
-	"estado": "RJ"
+    "rua": "Rua Zanoni Ferrite",
+    "bairro": "Anil",
+    "cidade": "Rio de Janeiro",
+    "estado": "RJ"
 }
 ```
 
@@ -565,22 +565,22 @@ Cadastra um novo pedido no sistema.
 {
 	"id": 3,
 	"dados_cliente": {
-		"cliente": "Maria Silva",
+        "cliente": "Maria Silva",
         "email":"maria.silva@example.com",
-		"cpf": "98765432102"
+        "cpf": "98765432102"
 	},
 	"itens_pedido": [
 		{
-			"descricao": "Mouse",
-			"produto_id": 1,
-			"quantidade_produto": 1,
-			"valor_produto": 2500
+            "descricao": "Mouse",
+            "produto_id": 1,
+            "quantidade_produto": 1,
+            "valor_produto": 2500
 		},
 		{
-			"descricao": "Teclado",
-			"produto_id": 3,
-			"quantidade_produto": 3,
-			"valor_produto": 5000
+            "descricao": "Teclado",
+            "produto_id": 3,
+            "quantidade_produto": 3,
+            "valor_produto": 5000
 		}
 	],
 	"valor_total": 17500,
