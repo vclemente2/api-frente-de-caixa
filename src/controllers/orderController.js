@@ -28,7 +28,7 @@ const createOrder = async (req, res) => {
             if (id === product.produto_id) {
                 if (quantidade_estoque < product.quantidade_produto) {
                     throw new ConflictError(
-                        `O produto ${descricao} não possui estoque suficiente. Quantidade solicitada ${product.quantidade_produto}, quantidade em estoque ${quantidade_estoque}`
+                        `O produto ${descricao} (ID: ${id}) não possui estoque suficiente. Quantidade solicitada ${product.quantidade_produto}, quantidade em estoque ${quantidade_estoque}`
                     )
                 }
                 data = { descricao, ...product, valor_produto: valor, }
@@ -72,7 +72,8 @@ const createOrder = async (req, res) => {
         id: orderData.id,
         dados_cliente: {
             cliente: orderData.cliente.nome,
-            cpf: orderData.cliente.cpf,
+            email: orderData.cliente.email,
+            cpf: orderData.cliente.cpf
         },
         itens_pedido: productData,
         valor_total: orderData.valor_total,
@@ -92,17 +93,17 @@ const createOrder = async (req, res) => {
                         <td>${(product.valor_produto / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
                         <td>${((product.quantidade_produto * product.valor_produto) / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
                     </tr>
-                `;
+                `
             })
             .join(''),
-    });
+    })
 
     transporter.sendMail({
         from: `${process.env.MAIL_NAME} <${process.env.MAIL_FROM}>`,
         to: `${orderResponse.dados_cliente.cliente} <${orderData.cliente.email}>`,
         subject: `${orderResponse.dados_cliente.cliente}, Seu Pedido Foi Concluído!`,
         html: mailContent,
-    });
+    })
 
 
     return res.status(201).json(orderResponse)

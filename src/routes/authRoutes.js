@@ -3,7 +3,7 @@ const { userLogin } = require('../controllers/authController')
 const { validateRequisitionBody } = require('../middlewares/bodyValidation')
 const loginSchema = require('../schema/loginSchema')
 
-const routes = Router();
+const routes = Router()
 
 routes.post('/', validateRequisitionBody(loginSchema), userLogin)
 
