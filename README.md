@@ -104,13 +104,12 @@ A API estará disponível em http://localhost:3000.
 
 Isso conclui a configuração da API. Certifique-se de ter configurado corretamente todas as variáveis de ambiente e seguido as etapas corretamente para garantir um ambiente funcional.
 
----
 
 ## **2 - Utilização da API**
 
 ### **Endpoints**
 A seguir, são listados os endpoints disponíveis na API PDV.
-<br><br>
+
 
 ### **Listar categorias**
 Retorna todas as categorias cadastradas.
@@ -119,10 +118,8 @@ Retorna todas as categorias cadastradas.
 #### `Rota: /categoria`
 
 #### **Resposta de sucesso:**
-
+`HTTP 200 Ok`
 ```JSON
-// HTTP 200 Ok
-
 [    
     {        
         "id": 1,
@@ -132,10 +129,37 @@ Retorna todas as categorias cadastradas.
         "id": 2,
         "descricao": "Celulares"
     },
-    ...
+    {
+        "id": 3,
+        "descricao": "Beleza e Perfumaria"
+    },
+    {
+        "id": 4,
+        "descricao": "Mercado"
+    },
+    {
+        "id": 5, 
+        "descricao": "Livros e Papelaria" 
+    },
+    { 
+        "id": 6,
+        "descricao": "Brinquedos" 
+    },
+    {
+        "id": 7,
+        "descricao": "Moda"
+    },
+    {
+        "id": 8,
+        "descricao": "Bebê"
+    },
+    {
+        "id": 9,
+        "descricao": "Games"
+    },
 ]
 ```
-<br><br>
+
 
 ### **Cadastrar usuário**
 Cadastra um novo usuário no sistema.
@@ -152,9 +176,8 @@ Cadastra um novo usuário no sistema.
 ```
 
 #### **Resposta de sucesso:**
+`HTTP 201 Created`
 ```JSON
-// HTTP 201 Created
-
 {
 	"id": 1,
 	"nome": "José",
@@ -166,7 +189,7 @@ Cadastra um novo usuário no sistema.
 * Todos os campos obrigatórios serão validados: nome, email e senha.
 * A senha será criptografada usando um algoritmo confiável.
 * O campo de e-mail deve ser único para cada usuário.
-<br><br>
+
 
 ### **Efetuar login do usuário**
 Permite que um usuário cadastrado faça login no sistema.
@@ -182,9 +205,8 @@ Permite que um usuário cadastrado faça login no sistema.
 ```
 
 #### **Resposta de sucesso:**
+`HTTP 200 Ok`
 ```JSON
-// HTTP 200 Ok
-
 {
 	"id": 1,
 	"nome": "José",
@@ -194,14 +216,13 @@ Permite que um usuário cadastrado faça login no sistema.
 ```
 
 #### **Critérios de aceite:**
-
 * Valida se o e-mail e a senha estão corretos para o usuário em questão.
 * Gera um token de autenticação para o usuário.
 
 ```
 Nota: A partir deste ponto, todos os endpoints exigem o token de autenticação do usuário logado, enviado no header da requisição com o formato Bearer Token. Certifique-se de incluir o token válido em todas as requisições subsequentes.
 ```
-<br><br>
+
 
 ### **Detalhar perfil do usuário logado**
 Retorna os dados do perfil do usuário logado.
@@ -209,16 +230,15 @@ Retorna os dados do perfil do usuário logado.
 #### `Método: GET`
 #### `Rota: /usuario`
 #### **Resposta de sucesso:**
+`HTTP 200 Ok`
 ```JSON
-// HTTP 200 Ok
-
 {
 	"id": 1,
 	"nome": "José",
 	"email": "jose@example.com"
 }
 ```
-<br><br>
+
 
 ### **Editar perfil do usuário logado**
 Permite ao usuário logado atualizar as informações do seu perfil.
@@ -235,15 +255,13 @@ Permite ao usuário logado atualizar as informações do seu perfil.
 }
 ```
 #### **Resposta de sucesso:**
-```JSON
-// HTTP 204 No Content
-```
+`HTTP 204 No Content`
 
 #### **Critérios de aceite:**
 * Todos os campos obrigatórios serão validados: nome, email e senha.
 * A senha será criptografada usando um algoritmo confiável.
 * O campo de e-mail deve ser único para cada usuário.
-<br><br>
+
 
 ### **Cadastrar produto**
 Permite ao usuário logado cadastrar um novo produto no sistema.
@@ -261,9 +279,8 @@ Permite ao usuário logado cadastrar um novo produto no sistema.
 ```
 
 #### **Resposta de sucesso:**
+`HTTP 201 Created`
 ```JSON
-// HTTP 201 Created
-
 {
     "id": 1234,
     "descricao": "Notebook",
@@ -279,23 +296,20 @@ Permite ao usuário logado cadastrar um novo produto no sistema.
 * O campo de categoria_id deve corresponder a uma categoria existente no sistema.
 
 **Nota:** O campo produto_imagem é opcional e caso seja passado, deve ser informado a url da imagem no servidor de armazenamento, essa url pode ser obtida através da rota `/arquivo`
-<br><br>
+
 
 ### **Listar produtos**
-Retorna todos os produtos cadastrados no sistema.
+Retorna todos os produtos cadastrados no sistema. É possível filtrar os produtos por categoria utilizando o parâmetro de query "categoria_id".
 
 #### `Método: GET`
 #### `Rota: /produto`
 #### **Parâmetros de consulta:**
-```JSON
-categoria_id(opcional): O ID da categoria
-
-// Possibilita filtrar os produtos por categoria
+```
+categoria_id (opcional): O ID da categoria
 ```
 #### **Resposta de sucesso:**
+`HTTP 200 Ok`
 ```JSON
-// HTTP 200 Ok
-
 [    
     {        
         "id": 1,        
@@ -312,11 +326,10 @@ categoria_id(opcional): O ID da categoria
         "valor": 150000,        
         "categoria_id": 1,
         "produto_imagem": null
-    },    
-    ...
+    }
 ]
 ```
-<br><br>
+
 
 ### **Detalhar produto**
 Retorna os detalhes de um produto específico.
@@ -329,9 +342,8 @@ id: o ID do produto
 ```
 
 #### **Responsa de sucesso:**
+`HTTP 200 Ok`
 ```JSON
-//HTTP 200 Ok
-
 {
     "id": 1,
     "descricao": "Notebook",
@@ -340,7 +352,7 @@ id: o ID do produto
     "categoria_id": 1
 }
 ```
-<br><br>
+
 
 ### **Atualizar produto**
 Permite ao usuário logado atualizar as informações de um produto específico.
@@ -363,16 +375,14 @@ id: o ID do produto
 ```
 
 #### **Resposta de sucesso:**
-```JSON
-// HTTP 204 No Content
-```
+`HTTP 204 No Content`
 
 #### **Critérios de aceite:**
 * Todos os campos obrigatórios devem ser validados: descricao, valor, quantidade e categoria.
 * O campo de categoria_id deve corresponder a uma categoria existente no sistema.
 
 **Nota:** O campo produto_imagem é opcional e caso seja passado, deve ser informado a url da imagem no servidor de armazenamento, essa url pode ser obtida através da rota `/arquivo`
-<br><br>
+
 
 ### **Remover produto**
 Permite ao usuário logado remover um produto do sistema.
@@ -385,9 +395,7 @@ id: o ID do produto
 ```
 
 #### **Resposta de sucesso:**
-```JSON
-// HTTP 204 No Content
-```
+`HTTP 204 No Content`
 
 #### **Critérios de aceite:**
 * O ID informado deve pertencer a um produto cadastrado.
@@ -395,7 +403,7 @@ id: o ID do produto
 * Caso o produto possua uma imagem vinculada, a mesma será excluída do servidor de armazenamento de arquivos.
 
 **Nota**: Não será permitida a exclusão de um produto que esteja registrado em algum pedido.
-<br><br>
+
 
 ### **Cadastrar cliente**
 Permite ao usuário logado cadastrar um novo cliente no sistema.
@@ -413,9 +421,8 @@ Permite ao usuário logado cadastrar um novo cliente no sistema.
 }
 ```
 #### **Resposta de sucesso:**
+`HTTP 201 Created`
 ```JSON
-// HTTP 201 Created
-
 {
     "id": 123,
     "nome": "Maria",
@@ -433,7 +440,7 @@ Permite ao usuário logado cadastrar um novo cliente no sistema.
 #### **Critérios de aceite:**
 * Todos os campos obrigatórios devem ser validados: nome, email e cpf.
 * Os campos de email e cpf devem ser únicos para cada cliente.
-<br><br>
+
 
 ### **Listar clientes**
 Retorna todos os clientes cadastrados no sistema.
@@ -441,9 +448,8 @@ Retorna todos os clientes cadastrados no sistema.
 #### `Método: GET`
 #### `Rota: /cliente`
 #### **Resposta de sucesso:**
+`HTTP 200 Ok`
 ```JSON
-// HTTP 200 Ok
-
 [
     {
         "id": 1,
@@ -468,11 +474,10 @@ Retorna todos os clientes cadastrados no sistema.
         "bairro": null,
         "cidade": null,
         "estado": null
-    },
-    ...
+    }
 ]
 ```
-<br><br>
+
 
 ### **Detalhar cliente**
 Retorna os detalhes de um cliente específico.
@@ -485,9 +490,8 @@ id: o ID do cliente
 ```
 
 #### **Resposta de sucesso:**
+`HTTP 200 Ok`
 ```JSON
-// HTTP 200 Ok
-
 {
     "id": 1,
     "nome": "Maria",
@@ -501,7 +505,7 @@ id: o ID do cliente
     "estado": "RJ"
 }
 ```
-<br><br>
+
 
 ### **Atualizar cliente**
 Permite ao usuário logado atualizar as informações de um cliente específico.
@@ -525,14 +529,12 @@ id: o ID do cliente
 ```
 
 #### **Resposta de sucesso:**
-```JSON
-// HTTP 204 No Content
-```
+`HTTP 204 No Content`
 
 #### **Critérios de aceite:**
 * Todos os campos obrigatórios devem ser validados: nome, email e cpf.
 * Os campos de email e cpf devem ser únicos para cada cliente.
-<br><br>
+
 
 ### **Cadastrar Pedido**
 Cadastra um novo pedido no sistema.
@@ -558,9 +560,8 @@ Cadastra um novo pedido no sistema.
 ```
 
 #### **Resposta de sucesso:**
+`HTTP 201 Created`
 ```JSON
-// HTTP 201 Created
-
 {
 	"id": 3,
 	"dados_cliente": {
@@ -598,7 +599,7 @@ Cadastra um novo pedido no sistema.
 * O pedido será cadastrado apenas se todos os produtos forem validados.
 
 **Nota:** Caso o pedido seja concluído, um e-mail será disparado para o cliente notificando que o pedido foi efetuado com sucesso.
-<br><br>
+
 
 ### **Listar pedidos**
 Retorna todos os pedidos cadastrados no sistema. É possível filtrar os pedidos por cliente utilizando o parâmetro de query "cliente_id".
@@ -611,9 +612,8 @@ cliente_id (opcional): o ID do cliente para filtrar os pedidos
 ```
 
 #### **Resposta de sucesso:**
+`HTTP 200 Ok`
 ```JSON
-// HTTP 200 Ok
-
 [
     {
         "pedido": {
@@ -645,7 +645,7 @@ cliente_id (opcional): o ID do cliente para filtrar os pedidos
 #### **Critérios de aceite:**
 * Caso seja informado o parâmetro "cliente_id", os pedidos serão filtrados por cliente. Caso o ID do cliente informado exista.
 * Caso não seja informado o parâmetro "cliente_id", todos os pedidos cadastrados serão retornados.
-<br><br>
+
 
 ### **Upload de imagem**
 Realiza o upload de uma imagem para o servidor de armazenamento.
@@ -658,9 +658,8 @@ imagem: arquivo de imagem a ser enviado para o servidor de armazenamento
 ```
 
 #### **Resposta de sucesso:**
+`HTTP 201 Created`
 ```JSON
-// HTTP 201 Created
-
 {
 	"url": "https://exemplo.com/c5e20429-d950-46fc-92aa-ffff4a696b2e",
 	"path": "c5e20429-d950-46fc-92aa-ffff4a696b2e"
@@ -670,7 +669,7 @@ imagem: arquivo de imagem a ser enviado para o servidor de armazenamento
 * Valida se a propriedade "imagem" foi informada no corpo da requisição.
 * Recebe a propriedade "imagem" e envia para o servidor de armazenamento.
 * Obtém e retorna a URL da imagem que teve o upload concluído.
-<br><br>
+
 
 ### **Listar imagens**
 Obtém as URLs de todas as imagens armazenadas no servidor de armazenamento.
@@ -679,9 +678,8 @@ Obtém as URLs de todas as imagens armazenadas no servidor de armazenamento.
 #### `Rota: /arquivo`
 
 #### **Resposta de sucesso:**
+`HTTP 201 Created`
 ```JSON
-// HTTP 201 Created
-
 [
     {
         "url": "https://exemplo.com/c5e20429-d950-46fc-92aa-ffff4a696b2e",
